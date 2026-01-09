@@ -592,11 +592,24 @@ header > *{
       `;
     }
 
-    function renderFolders(){
-      foldersDiv.innerHTML = Object.entries(folders)
-        .map(([key, obj]) => folderCardHTML(key, obj))
-        .join("");
-    }
+function renderFolders(){
+  foldersDiv.innerHTML = Object.entries(folders)
+    .map(([key, obj], idx) => `
+      <div class="folder-card" style="--i:${idx}" onclick="openFolder('${key}')">
+        <div class="folder-thumb">
+          <img src="${obj.preview}" alt="${obj.title} preview">
+        </div>
+        <div class="folder-bar">
+          <svg class="folder-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M3 7.5C3 6.12 4.12 5 5.5 5H9.2c.54 0 1.06.21 1.44.59l1.1 1.1c.38.38.9.59 1.44.59H18.5C19.88 7.28 21 8.4 21 9.78V17.5C21 18.88 19.88 20 18.5 20H5.5C4.12 20 3 18.88 3 17.5V7.5Z"
+                  stroke="rgba(255,255,255,0.9)" stroke-width="1.5" />
+          </svg>
+          <div class="folder-title">${obj.title}</div>
+        </div>
+      </div>
+    `)
+    .join("");
+}
 
     function openFolder(key){
       const f = folders[key];
