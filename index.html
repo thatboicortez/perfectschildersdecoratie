@@ -106,6 +106,19 @@
   background: rgba(0,0,0,0.45);
   border-color: rgba(255,255,255,0.14);
 }
+    
+.folder-card{
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.folder-card:active{
+  transform: translateY(-1px) scale(0.985);
+}
+
+.folder-card.is-opening{
+  transform: translateY(-1px) scale(0.985);
+}
+
 
 /* уважение к настройке “reduce motion” */
 @media (prefers-reduced-motion: reduce){
@@ -584,7 +597,7 @@ header > *{
 
     function folderCardHTML(key, obj){
       return `
-        <div class="folder-card" onclick="openFolder('${key}')">
+        <div class="folder-card" onclick="openFolderClick(this,'${key}')">
           <div class="folder-thumb">
             <img src="${obj.preview}" alt="${obj.title} preview">
           </div>
@@ -602,7 +615,7 @@ header > *{
 function renderFolders(){
   foldersDiv.innerHTML = Object.entries(folders)
     .map(([key, obj], idx) => `
-      <div class="folder-card" style="--i:${idx}" onclick="openFolder('${key}')">
+      <div class="folder-card" style="--i:${idx}" onclick="openFolderClick(this, '${key}')">
         <div class="folder-thumb">
           <img src="${obj.preview}" alt="${obj.title} preview">
         </div>
@@ -636,6 +649,17 @@ function renderFolders(){
         imagesDiv.appendChild(tile);
       });
     }
+
+   function openFolderClick(card, key){
+       card.classList.add("is-opening");
+
+       setTimeout(() => {
+          openFolder(key);
+         card.classList.remove("is-opening"); // 👈 ОБЯЗАТЕЛЬНО
+       }, 140);
+    }
+
+
 
     function goBack(){
       foldersDiv.style.display = "grid";
