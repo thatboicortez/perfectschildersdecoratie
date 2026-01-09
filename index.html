@@ -30,11 +30,41 @@
       color: var(--text);
     }
 
-    header{
-      padding:60px 20px 44px;
-      text-align:center;
-      background: linear-gradient(135deg, #1f1f1f, #111);
-    }
+  header{
+  position: relative;
+  padding: 70px 20px 55px;
+  text-align:center;
+  overflow: hidden;
+
+  /* картинка */
+  background: url("header-bg.png") center / cover no-repeat;
+}
+
+/* затемнение + виньетка */
+header::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.65) 70%,
+      rgba(0,0,0,0.85) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.65)
+    );
+  z-index:0;
+}
+
+/* текст поверх затемнения */
+header > *{
+  position: relative;
+  z-index: 1;
+}
+
     header h1{
       font-size:42px;
       margin:0 0 10px 0;
