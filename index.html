@@ -76,6 +76,46 @@
       color: #666;
       font-size: 14px;
     }
+      /* === Gallery folders grid === */
+
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 в ряд */
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.folder-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.folder-card:hover {
+  transform: scale(1.04);
+}
+
+.folder-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* КВАДРАТ */
+  overflow: hidden;
+  border-radius: 14px;
+  background: #111;
+}
+
+.folder-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* НЕ растягивается */
+}
+
+.folder-title {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
