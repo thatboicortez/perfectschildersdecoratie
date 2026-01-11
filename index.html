@@ -442,49 +442,87 @@ function renderFolders(){
   `).join("");
 }
 
-function openFolder(k){
-  const f=folders[k]; if(!f)return;
-  foldersDiv.style.display="none";
-  imagesDiv.style.display="grid";
-  backBtn.style.display="inline-block";
-  titleEl.innerText=f.title;
-  imagesDiv.innerHTML="";
-  f.images.forEach(s=>{
-    const d=document.createElement("div");
-    d.className="img-tile";
-    d.innerHTML = `<img src="${s}" loading="lazy" alt="">`;
-    d.onclick=()=>openLightbox(s);
+// --- helpers ---
+function showGallery(){
+  foldersDiv.style.display = "grid";
+  imagesDiv.style.display  = "none";
+  backBtn.style.display    = "none";
+  titleEl.innerText        = "Our works";
+  imagesDiv.innerHTML      = "";
+}
+
+function showFolder(k){
+  const f = folders[k];
+  if(!f) return;
+
+  foldersDiv.style.display = "none";
+  imagesDiv.style.display  = "grid";
+  backBtn.style.display    = "inline-block";
+  titleEl.innerText        = f.title;
+
+  imagesDiv.innerHTML = "";
+  f.images.forEach(s => {
+    const d = document.createElement("div");
+    d.className = "img-tile";
+    d.innerHTML = <img src="${s}" loading="lazy" alt="">;
+    d.onclick = () => openLightbox(s);
     imagesDiv.appendChild(d);
   });
 }
 
-function openFolderClick(card,k){
+// --- navigation ---
+function openFolder(k){
+  // пушим состояние "внутри папки"
+  history.pushState({ page: "folder", key: k }, "", "#" + k);
+  showFolder(k);
+}
+
+function openFolderClick(card, k){
   card.classList.add("is-opening");
-  setTimeout(()=>{openFolder(k);card.classList.remove("is-opening");},140);
+  setTimeout(() => {
+    openFolder(k);
+    card.classList.remove("is-opening");
+  }, 140);
 }
 
+// кнопка ← Back на сайте
 function goBack(){
-  foldersDiv.style.display="grid";
-  imagesDiv.style.display="none";
-  backBtn.style.display="none";
-  titleEl.innerText="Our works";
-  imagesDiv.innerHTML="";
+  // если реально в папке — идём назад по истории браузера
+  if (history.state && history.state.page === "folder") {
+    history.back();
+  } else {
+    // если вдруг нет state — просто показываем галерею
+    showGallery();
+  }
 }
 
+// --- lightbox ---
 function openLightbox(s){
-  document.getElementById("lightboxImg").src=s;
+  document.getElementById("lightboxImg").src = s;
   document.getElementById("lightbox").classList.add("open");
 }
 function closeLightbox(){
   document.getElementById("lightbox").classList.remove("open");
-  document.getElementById("lightboxImg").src="";
+  document.getElementById("lightboxImg").src = "";
 }
 
+// --- init ---
 renderFolders();
-  
+
+// задаём стартовое состояние, чтобы "назад" не выбивало с сайта
+history.replaceState({ page: "home" }, "", location.pathname);
+
+// ESC закрывает лайтбокс
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeLightbox();
+  if (e.key === "Escape") closeLightbox();
+});
+
+// кнопка "назад" браузера: из папки возвращаемся в галерею
+window.addEventListener("popstate", (e) => {
+  if (e.state && e.state.page === "folder") {
+    showFolder(e.state.key);
+  } else {
+    showGallery();
   }
 });
 
