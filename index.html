@@ -287,10 +287,20 @@
     .hero-grid{ display:block; }
 
     /* shift text right on desktop (like Macroedges) */
-    .hero-left{
-      max-width: 640px;
-      margin-left: clamp(24px, 6vw, 110px);
-    }
+   .hero-left{
+  max-width:640px;
+  margin-left:clamp(220px, 22vw, 640px);
+  transform:none;
+}
+
+@media(max-width: 980px){
+  .hero-left{
+    margin-left:0;
+    max-width:720px;
+    transform:none;
+  }
+}
+
 
     .kicker{
       color:var(--muted2);
