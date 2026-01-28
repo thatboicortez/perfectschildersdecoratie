@@ -6,40 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/favicon.png">
 
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
+    /* =========================
+       FONTS
+       - FLURO: you uploaded fluro-regular.otf (keep it in repo root or adjust path)
+       - ODDLINI: add file fonts/oddlini.woff2 (or rename in CSS below)
+    ========================== */
+    @font-face{
+      font-family:"FLURO";
+      src:url("fluro-regular.otf") format("opentype");
+      font-weight:400;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    /* IMPORTANT: put your Oddlini file here:
+       /fonts/oddlini.woff2
+       If your filename differs — rename it or change the url below.
+    */
+    @font-face{
+      font-family:"OddliniEx";
+      src:url("fonts/oddlini.woff2") format("woff2");
+      font-weight:800;
+      font-style:normal;
+      font-display:swap;
+    }
+
     :root{
       --bg:#000;
-      --text:#e9eef5;
-      --muted:#8b95a7;
-      --muted2:#6e788a;
-      --border:rgba(255,255,255,.12);
-      --border2:rgba(255,255,255,.08);
-      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --text:#fff;
+      --muted:#6E7889;          /* from Figma */
+      --muted2:#9CA3AF;         /* from Figma */
+      --border:rgba(255,255,255,.10);
+      --border2:rgba(255,255,255,.14);
+      --panel:rgba(255,255,255,.03);
+      --panel2:rgba(255,255,255,.06);
+
+      --container:1180px;
+      --navH:64px;
       --radius:18px;
-      --radius2:26px;
-      --container: 1180px;
-      --white:#fff;
+      --radius2:14px;
+
+      --shadow:0 18px 60px rgba(0,0,0,.55);
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-
-    html{
-      scroll-behavior: smooth;
-      scroll-padding-top: 110px;
-    }
-
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #000; /* полностью черный */
+      background:var(--bg);
       color:var(--text);
-      letter-spacing:.2px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
     body.no-scroll{
@@ -47,375 +64,429 @@
       touch-action:none;
     }
 
-    a{ color:inherit; text-decoration:none; }
-
-    .container{
-      width: min(var(--container), calc(100% - 48px));
-      margin-inline:auto;
+    /* ===== Layout helpers ===== */
+    .wrap{
+      width:min(var(--container), calc(100% - 48px));
+      margin:0 auto;
     }
 
-    /* Thin divider line like Macroedges */
-    .section-divider{
-      height: 1px;
-      width: 100%;
-      background: rgba(255,255,255,.06);
+    .divider{
+      height:1px;
+      background:rgba(255,255,255,.10);
+      width:100%;
     }
 
-    /* ===== BOXED NAVBAR (like Macroedges) ===== */
-    .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: transparent;
-      padding: 16px 0;
+    /* =========================
+       BOXED NAV (Macroedges-like)
+    ========================== */
+    .nav-shell{
+      position:fixed;
+      top:18px;
+      left:0;
+      right:0;
+      z-index:1000;
+      pointer-events:none;
     }
 
     .nav-box{
-      width: min(980px, calc(100% - 48px));
-      margin: 0 auto;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 14px;
-      background: rgba(5,6,7,.55);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      overflow: hidden; /* to clip mobile dropdown edges */
-    }
-
-    .nav{
+      pointer-events:auto;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding: 12px 14px;
-      gap: 18px;
+      gap:16px;
+
+      height:var(--navH);
+      padding:0 14px;
+
+      border:1px solid var(--border2);
+      border-radius:var(--radius);
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+
+      box-shadow:0 12px 40px rgba(0,0,0,.55);
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap:10px;
-      font-weight:800;
-      letter-spacing:.8px;
-      text-transform:uppercase;
-      min-width: 0;
+      gap:12px;
+      min-width: 260px;
     }
-
     .brand-mark{
-      width:20px;height:20px;
-      border:1px solid rgba(255,255,255,.25);
+      width:18px; height:18px;
+      border:1px solid rgba(255,255,255,.18);
       border-radius:6px;
-      display:grid; place-items:center;
-      opacity:.95;
-      flex:0 0 auto;
+      background:rgba(255,255,255,.03);
     }
-
-    .brand-text{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 420px;
+    .brand-name{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:14px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.92);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 380px;
     }
 
     .nav-links{
       display:flex;
       align-items:center;
-      gap:22px;
-      color:var(--muted);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      flex: 0 0 auto;
+      gap:18px;
     }
-    .nav-links a{ opacity:.85; }
-    .nav-links a:hover{ opacity:1; color:var(--text); }
+
+    .nav-links a{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.60);
+      text-decoration:none;
+      padding:10px 6px;
+      border-radius:10px;
+      transition:color .15s ease, background .15s ease;
+    }
+    .nav-links a:hover{
+      color:rgba(255,255,255,.88);
+      background:rgba(255,255,255,.04);
+    }
 
     .nav-right{
       display:flex;
       align-items:center;
-      gap:12px;
-      flex: 0 0 auto;
+      gap:10px;
     }
 
     .lang{
       display:flex;
-      gap:8px;
       align-items:center;
-      border:1px solid rgba(255,255,255,.10);
+      gap:6px;
+      padding:4px;
       border-radius:999px;
-      padding:6px;
-      background: rgba(0,0,0,.2);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
     }
     .lang button{
+      appearance:none;
       border:0;
       background:transparent;
-      color:var(--muted);
-      padding:6px 10px;
-      border-radius:999px;
+      color:rgba(255,255,255,.70);
+      font-family:"FLURO", system-ui, sans-serif;
       font-size:12px;
-      letter-spacing:1px;
-      cursor:pointer;
+      letter-spacing:.14em;
       text-transform:uppercase;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:background .15s ease, color .15s ease;
     }
     .lang button.active{
-      color:var(--text);
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.08);
+      color:rgba(255,255,255,.92);
     }
 
     .btn{
-      border:1px solid rgba(255,255,255,.16);
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:700;
-      font-size:12px;
-      letter-spacing:1px;
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      color:rgba(255,255,255,.92);
+      font-family:"FLURO", system-ui, sans-serif;
+      letter-spacing:.16em;
       text-transform:uppercase;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
+      font-size:12px;
+      padding:12px 16px;
+      border-radius:999px;
       cursor:pointer;
-      background: rgba(0,0,0,.25);
-      flex: 0 0 auto;
-      white-space: nowrap;
+      transition:transform .12s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
     }
-    .btn:hover{ border-color: rgba(255,255,255,.28); }
-    .btn.primary{
-      background: var(--white);
-      color: #0a0b0c;
-      border-color: var(--white);
-      border-radius: 10px;
-      padding: 10px 16px;
-    }
-    .btn.primary:hover{ filter: brightness(.95); }
+    .btn:hover{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); }
+    .btn:active{ transform:translateY(1px); }
 
-    /* ===== Burger (mobile) ===== */
+    .btn-primary{
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+    }
+    .btn-primary:hover{ background:#f1f1f1; }
+
+    /* Burger (mobile) */
     .burger{
-      display:none;
-      width:44px;
-      height:40px;
-      border-radius:10px;
+      width:46px;
+      height:46px;
+      border-radius:12px;
       border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.25);
-      cursor:pointer;
-      position: relative;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .burger span{
-      position:absolute;
-      left:12px;
-      right:12px;
-      height:2px;
-      background: rgba(255,255,255,.85);
-      border-radius:2px;
-    }
-    .burger span:nth-child(1){ top:12px; }
-    .burger span:nth-child(2){ top:19px; opacity:.9; }
-    .burger span:nth-child(3){ top:26px; }
-
-    /* Mobile dropdown panel (like Macroedges) */
-    .mobile-menu{
+      background:rgba(255,255,255,.04);
       display:none;
-      border-top:1px solid rgba(255,255,255,.10);
-      padding:18px 14px 14px;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-    .mobile-menu.open{ display:block; }
-
-    .mobile-links{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      padding: 6px 2px 18px;
-    }
-    .mobile-links a{
-      color: rgba(233,238,245,.75);
-      font-size:12px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-    }
-    .mobile-links a:hover{ color: var(--text); }
-
-    .mobile-lang{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin: 10px 0 14px;
-    }
-    .mobile-lang button{
-      width:100%;
-      border-radius: 0;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: rgba(233,238,245,.65);
-      padding: 14px 10px;
-      font-size:12px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .mobile-lang button.active{
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      border-color: rgba(255,255,255,.18);
-    }
-
-    .mobile-cta{
-      width:100%;
+      align-items:center;
       justify-content:center;
-      border-radius: 0;
+      cursor:pointer;
     }
+    .burger svg{ opacity:.9; }
 
-    /* ===== HERO (full screen, black background) ===== */
-    header.hero{
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0;
+    /* Mobile panel (Macroedges-style dropdown) */
+    .mobile-panel{
+      position:fixed;
+      top: calc(18px + var(--navH) + 10px);
+      left:50%;
+      transform:translateX(-50%);
+      width:min(var(--container), calc(100% - 48px));
+      z-index:1100;
+
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius);
+      background:rgba(0,0,0,.82);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+
+      display:none;
       overflow:hidden;
-      background: #000;
     }
+    .mobile-panel.open{ display:block; }
 
-  .hero-content{
-  position:relative;
-  z-index:2;
- 
-  padding:90px 0 70px;
-  width:100%;
-}
-
-.hero-left{
-  max-width:640px;
-  margin-left:clamp(220px, 22vw, 640px);
-  transform:none;
-}
-
-@media(max-width: 980px){
-  .hero-left{
-    margin-left:0;
-    max-width:720px;
-    transform:none;
-  }
-}
-
-
-
-    .kicker{
-      color:var(--muted2);
-      font-size:12px;
-      letter-spacing:2px;
+    .mobile-panel .row{
+      padding:16px 16px;
+    }
+    .mobile-panel .row + .row{
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .mobile-panel a{
+      display:block;
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:13px;
+      letter-spacing:.18em;
       text-transform:uppercase;
-      margin-bottom:14px;
+      color:rgba(255,255,255,.72);
+      text-decoration:none;
+      padding:12px 4px;
+    }
+    .mobile-panel a:hover{ color:rgba(255,255,255,.92); }
+
+    .mobile-panel .lang{
+      width:100%;
+      justify-content:space-between;
+      padding:6px;
+    }
+    .mobile-panel .lang button{ width:50%; }
+
+    .mobile-panel .btn-primary{
+      width:100%;
+      border-radius:14px;
+      padding:14px 16px;
+      font-size:12px;
+      letter-spacing:.18em;
     }
 
-    .h1{
-      font-size: clamp(40px, 6vw, 68px);
-      line-height:1.02;
+    .scrim{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:1050;
+      display:none;
+    }
+    .scrim.open{ display:block; }
+
+    /* Hide desktop nav parts on mobile */
+    @media(max-width: 980px){
+      .nav-links{ display:none; }
+      .lang{ display:none; }
+      .btn-primary{ display:none; }
+      .burger{ display:flex; }
+      .brand-name{ max-width: 210px; }
+    }
+
+    /* =========================
+       HERO (100vh, pure black)
+    ========================== */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center; /* vertical center */
+      background:#000;
+      padding-top: calc(18px + var(--navH) + 18px);
+      padding-bottom: 40px;
+    }
+
+    .hero-grid{
+      width:100%;
+      display:grid;
+      grid-template-columns: 1fr;
+      align-items:center;
+    }
+
+    .hero-left{
+      max-width: 760px;
+
+      /* Strong right shift on desktop (as requested) */
+      margin-left: clamp(220px, 22vw, 620px);
+
+      transform:none;
+    }
+
+    @media(max-width: 980px){
+      .hero{
+        align-items:flex-start;
+        padding-top: calc(18px + var(--navH) + 24px);
+      }
+      .hero-left{
+        margin-left: 0;
+        max-width: 720px;
+      }
+    }
+
+    .hero-kicker{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:48px;          /* from Figma */
+      color:#6E7889;           /* from Figma */
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      line-height:1.15;
+      margin:0 0 18px;
+    }
+
+    .hero-title{
+      font-family:"OddliniEx", system-ui, sans-serif;
+      font-size:123px;         /* from Figma */
+      line-height:0.95;
+      letter-spacing: .00em;
+      text-transform:uppercase;
       margin:0;
-      letter-spacing:-1.2px;
-      text-transform:uppercase;
+      color:#fff;
     }
-    .h1 .dim{ color: rgba(233,238,245,.55); }
+    .hero-title.muted{
+      color:#9CA3AF;           /* from Figma */
+      margin-top:10px;
+    }
 
-    .sub{
-      max-width:640px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.7;
+    @media(max-width: 980px){
+      .hero-kicker{ font-size:14px; letter-spacing:.20em; }
+      .hero-title{ font-size: clamp(42px, 10vw, 76px); }
+    }
+
+    .hero-desc{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:32px;          /* from Figma */
+      color:#6E7889;
       text-transform:uppercase;
-      letter-spacing:1px;
-      margin-top:18px;
+      letter-spacing:.06em;
+      line-height:1.25;
+      margin: 18px 0 22px;
+      max-width: 760px;
+    }
+    @media(max-width: 980px){
+      .hero-desc{
+        font-size: 14px;
+        letter-spacing:.10em;
+        line-height:1.35;
+      }
     }
 
     .hero-actions{
-      margin-top:22px;
       display:flex;
+      align-items:center;
       gap:12px;
-      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    @media(max-width: 980px){
+      .hero-actions{ flex-direction:column; align-items:stretch; }
+      .hero-actions .btn{ width:100%; border-radius:14px; padding:14px 16px; }
     }
 
-    .stats{
-      margin-top:28px;
+    .hero-stats{
       display:flex;
-      gap:26px;
-      align-items:flex-end;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1px;
-      font-size:11px;
-      flex-wrap:wrap;
+      gap:18px;
+      margin-top:18px;
+      padding-top:14px;
     }
     .stat{
-      padding-right:22px;
+      min-width: 100px;
+      padding-right:18px;
       border-right:1px solid rgba(255,255,255,.10);
     }
-    .stat:last-child{ border-right:0; }
-    .stat strong{
-      display:block;
-      color:var(--text);
-      font-size:24px;
-      letter-spacing:-.4px;
-      margin-bottom:6px;
+    .stat:last-child{ border-right:none; padding-right:0; }
+    .stat .num{
+      font-family:"OddliniEx", system-ui, sans-serif;
+      font-size:22px;
+      letter-spacing:.02em;
+      color:#fff;
     }
-
-    /* ===== Sections ===== */
-    section{ padding:64px 0; }
-
-    .h2{
-      margin:0 0 12px;
-      font-size:42px;
-      line-height:1.08;
-      letter-spacing:-.8px;
-      text-transform:uppercase;
-    }
-    .lead{
-      margin:0 0 28px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1px;
+    .stat .lbl{
+      font-family:"FLURO", system-ui, sans-serif;
       font-size:12px;
-      line-height:1.7;
-      max-width:860px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.42);
+      margin-top:4px;
     }
 
-    /* ===== WORKS GRID (folders) ===== */
+    /* =========================
+       SECTIONS
+    ========================== */
+    section{
+      padding:64px 0;
+    }
+    .section-head{
+      padding:18px 0 26px;
+    }
+    .section-kicker{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.42);
+      margin:0 0 12px;
+    }
+    .section-title{
+      font-family:"OddliniEx", system-ui, sans-serif;
+      font-size:56px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      margin:0 0 10px;
+      color:#fff;
+    }
+    .section-sub{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:14px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.46);
+      margin:0;
+      max-width: 760px;
+    }
+
+    @media(max-width:980px){
+      .section-title{ font-size:34px; }
+    }
+
+    /* =========================
+       WORKS (folders + images)
+    ========================== */
     #folders.folders-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:18px;
+      gap:22px;
+      margin-top: 16px;
     }
 
     .folder-card{
       cursor:pointer;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
+      border-radius:18px;
       overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,0));
-      box-shadow: 0 10px 40px rgba(0,0,0,.35);
-
-      opacity:0;
-      animation:fadeUp .6s ease forwards;
-      animation-delay:calc(var(--i,0)*.08s);
-      transform: translateY(8px);
-
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-      will-change: transform;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      will-change:transform;
     }
-
-    @keyframes fadeUp{ to{ opacity:1; transform: translateY(0); } }
-
-    @media (hover:hover) and (pointer:fine){
-      .folder-card:hover{
-        transform: translateY(-8px);
-        border-color: rgba(255,255,255,.18);
-        box-shadow: 0 22px 60px rgba(0,0,0,.6);
-      }
+    .folder-card:hover{
+      transform:translateY(-8px) scale(1.02);
+      border-color:rgba(255,255,255,.16);
+      box-shadow:0 22px 60px rgba(0,0,0,.6);
     }
-
     .folder-card:active,
     .folder-card.is-opening{
-      transform: translateY(-3px);
+      transform:translateY(-3px) scale(1.01);
     }
 
     .folder-thumb{
@@ -425,7 +496,6 @@
       overflow:hidden;
       position:relative;
     }
-
     .folder-thumb img{
       width:100%;
       height:100%;
@@ -434,7 +504,6 @@
       transform:scale(1.02);
       filter:saturate(1.05) contrast(1.05);
     }
-
     .folder-thumb::after{
       content:"";
       position:absolute;
@@ -444,12 +513,10 @@
       opacity:0;
       pointer-events:none;
     }
-
     .folder-card:hover .folder-thumb::after{
       opacity:1;
       animation:shine .9s ease forwards;
     }
-
     @keyframes shine{
       from{transform:translateX(-60%) rotate(10deg);}
       to{transform:translateX(60%) rotate(10deg);}
@@ -460,184 +527,192 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      padding:14px 14px;
-      background: rgba(0,0,0,.35);
-      border-top:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(6px);
-      transition: background .25s ease, border-color .25s ease;
+      padding:12px 14px;
+      background:rgba(0,0,0,.35);
+      border-top:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(6px);
     }
-
     .folder-left{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      display:flex; align-items:center; gap:10px;
       min-width:0;
     }
-
-    .folder-card:hover .folder-bar{
-      background: rgba(0,0,0,.45);
-      border-color: rgba(255,255,255,.14);
-    }
-
     .folder-icon{
       width:18px;
-      opacity:.92;
+      opacity:.9;
       flex:0 0 auto;
     }
-
     .folder-title{
+      font-family:"FLURO", system-ui, sans-serif;
       font-size:13px;
-      font-weight:800;
-      letter-spacing:1px;
+      letter-spacing:.14em;
       text-transform:uppercase;
+      color:rgba(255,255,255,.90);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-
-    .folder-cta{
-      font-size:12px;
-      letter-spacing:1px;
+    .folder-pill{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:11px;
+      letter-spacing:.14em;
       text-transform:uppercase;
-      color: rgba(233,238,245,.70);
-      border:1px solid rgba(255,255,255,.12);
-      padding:7px 10px;
+      color:rgba(255,255,255,.70);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px 10px;
       border-radius:999px;
-      background: rgba(0,0,0,.22);
-      flex:0 0 auto;
+      background:rgba(255,255,255,.03);
     }
 
-    /* ===== IMAGES GRID ===== */
     #images.images-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:14px;
+      gap:16px;
+      margin-top: 14px;
     }
-
     .img-tile{
-      border-radius: 16px;
+      border-radius:14px;
       overflow:hidden;
       background:#0b0b0b;
       border:1px solid rgba(255,255,255,.10);
       cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease;
+      transition:transform .18s ease, border-color .18s ease;
     }
-
     .img-tile:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,.18);
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.16);
     }
-
     .img-tile img{
       width:100%;
       aspect-ratio:1/1;
       object-fit:cover;
       display:block;
-      filter:saturate(1.03) contrast(1.03);
     }
 
-    /* Back button */
-    .center-actions{
-      text-align:center;
-      margin-top:26px;
-    }
+    .center-actions{text-align:left;margin-top:22px;}
     #backBtn{
-      background: rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.14);
-      color: var(--text);
-      padding: 12px 18px;
-      border-radius: 12px;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:14px;
       cursor:pointer;
-      transition: .15s;
+      transition:.15s;
+      font-family:"FLURO", system-ui, sans-serif;
+      letter-spacing:.16em;
       text-transform:uppercase;
-      letter-spacing:1px;
       font-size:12px;
-      font-weight:800;
     }
-
     #backBtn:hover{
-      background: rgba(255,255,255,.12);
-      transform: translateY(-1px);
+      background:rgba(255,255,255,.06);
+      transform:translateY(-1px);
     }
 
-    /* ===== FAQ ===== */
+    @media(max-width: 980px){
+      #folders.folders-grid{grid-template-columns:repeat(2,1fr);}
+      #images.images-grid{grid-template-columns:repeat(2,1fr);}
+    }
+    @media(max-width: 560px){
+      #folders.folders-grid{grid-template-columns:1fr;}
+      #images.images-grid{grid-template-columns:1fr;}
+      .center-actions{text-align:center;}
+    }
+
+    /* =========================
+       FAQ (Macroedges-like)
+    ========================== */
     .faq-grid{
-      margin-top: 26px;
-      display: grid;
+      display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      gap:18px;
+      margin-top: 18px;
+    }
+    .faq-item{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      background:rgba(255,255,255,.02);
+      padding:18px 18px 16px;
+    }
+    .faq-q{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:13px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.95);
+      margin:0 0 10px;
+      font-weight:700;
+    }
+    .faq-a{
+      font-family:"FLURO", system-ui, sans-serif;
+      font-size:13px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.52);
+      margin:0;
+      line-height:1.5;
+      font-weight:300;
+    }
+    @media(max-width: 980px){
+      .faq-grid{ grid-template-columns: 1fr; }
     }
 
-    .qa{
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      padding: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,0));
-      min-height: 140px;
-    }
-
-    .qa h4{
-      margin: 0 0 12px;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .qa p{
-      margin: 0;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-
-    /* ===== Contacts ===== */
-    .contacts{
+    /* =========================
+       CONTACTS
+    ========================== */
+    .contacts-row{
       display:flex;
+      gap:14px;
+      align-items:center;
       flex-wrap:wrap;
-      gap:12px;
-      margin-top:10px;
+      margin-top: 18px;
     }
-    .contacts a{
+    .contacts-row a{
+      text-decoration:none;
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      color: rgba(233,238,245,.78);
-      border:1px solid rgba(255,255,255,.12);
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.25);
+      justify-content:center;
+      gap:10px;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      color:rgba(255,255,255,.88);
+      font-family:"FLURO", system-ui, sans-serif;
+      letter-spacing:.16em;
       text-transform:uppercase;
-      letter-spacing:1px;
       font-size:12px;
-      font-weight:800;
-      transition:.18s;
+      transition:background .15s ease, border-color .15s ease, transform .12s ease;
     }
-    .contacts a:hover{
-      border-color: rgba(255,255,255,.20);
-      background: rgba(255,255,255,.06);
-      transform: translateY(-1px);
+    .contacts-row a:hover{
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.18);
+      transform:translateY(-1px);
     }
 
-    /* ===== Bottom mini footer bar ===== */
-    .mini-footer{
-      padding: 22px 0;
-      color: rgba(233,238,245,.55);
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    /* =========================
+       FOOTER (Macroedges-like)
+    ========================== */
+    footer{
+      padding:22px 0;
     }
-    .mini-footer-inner{
+    .footer-bar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
+      padding-top:18px;
+      color:rgba(255,255,255,.42);
+      font-family:"FLURO", system-ui, sans-serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    @media(max-width: 560px){
+      .footer-bar{ flex-direction:column; align-items:flex-start; }
     }
 
-    /* ===== LIGHTBOX ===== */
+    /* =========================
+       LIGHTBOX
+    ========================== */
     .lightbox{
       position: fixed;
       inset: 0;
@@ -681,16 +756,9 @@
       -webkit-tap-highlight-color: transparent;
     }
     .lb-btn:hover{ background: rgba(255,255,255,.12); }
-
     .lb-close{ top: 18px; left: 18px; font-size: 30px; }
-    .lb-prev{ left: 18px; }
-    .lb-next{ right: 18px; }
-    .lb-prev, .lb-next{
-      top: 50%;
-      transform: translateY(-50%);
-      line-height: 0.75;
-      padding-bottom: 4px;
-    }
+    .lb-prev{ left: 18px; top:50%; transform: translateY(-50%); padding-bottom:4px; }
+    .lb-next{ right: 18px; top:50%; transform: translateY(-50%); padding-bottom:4px; }
 
     .lb-counter{
       position: fixed;
@@ -705,140 +773,124 @@
       color: rgba(255,255,255,.85);
       font-size: 14px;
       backdrop-filter: blur(8px);
+      font-family:"FLURO", system-ui, sans-serif;
+      letter-spacing:.10em;
+      text-transform:uppercase;
     }
 
-    /* ===== Responsive ===== */
-    @media(max-width: 1060px){
-      .brand-text{ max-width: 260px; }
-    }
-
-    /* Mobile layout like Macroedges: hide desktop links/pills, show burger and dropdown */
-    @media (max-width: 980px){
-      .nav-links{ display:none; }
-      .nav-right .lang{ display:none; }
-      .nav-right .btn.primary{ display:none; }
-      .burger{ display:inline-flex; align-items:center; justify-content:center; }
-
-      .nav{ padding: 12px 12px; }
-      .brand-text{ max-width: 62vw; }
-
-      #folders.folders-grid{ grid-template-columns:repeat(2,1fr); }
-      #images.images-grid{ grid-template-columns:repeat(2,1fr); }
-      .faq-grid{ grid-template-columns: 1fr; }
-      .h2{ font-size:36px; }
-
-      /* On mobile, no extra left shift */
-      .hero-left{ margin-left: 0; }
-    }
-
-    @media(max-width: 560px){
-      .brand-text{ max-width: 58vw; }
-    }
-
-    @media(max-width: 520px){
-      #folders.folders-grid{ grid-template-columns:1fr; }
-      #images.images-grid{ grid-template-columns:1fr; }
-
+    @media (max-width: 520px){
       .lb-btn{ width: 58px; height: 58px; border-radius: 16px; }
       .lb-close{ top: 14px; left: 14px; }
       .lb-prev{ left: 12px; }
       .lb-next{ right: 12px; }
       .lb-counter{ bottom: 16px; }
-
-      .mini-footer-inner{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- BOXED NAV -->
-  <div class="topbar">
-    <div class="nav-box">
-      <div class="nav">
-        <a class="brand" href="#top">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span class="brand-text">PERFECT SCHILDERS &amp; DECORATIE</span>
-        </a>
+  <!-- NAV -->
+  <div class="nav-shell">
+    <div class="wrap">
+      <div class="nav-box" role="navigation" aria-label="Primary">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-name">PERFECT SCHILDERS &amp; DECORATIE</div>
+        </div>
 
         <div class="nav-links">
-          <a href="#works">WORKS</a>
+          <a href="#works">Works</a>
           <a href="#faq">FAQ</a>
-          <a href="#contacts">CONTACT</a>
+          <a href="#contact">Contact</a>
         </div>
 
         <div class="nav-right">
-          <div class="lang" aria-label="Language">
-            <button class="active" type="button">EN</button>
-            <button type="button">NL</button>
+          <div class="lang" aria-label="Language switcher">
+            <button class="active" type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="nl">NL</button>
           </div>
-          <a class="btn primary" href="#works">GALLERY</a>
 
-          <!-- Mobile burger -->
-          <button class="burger" type="button" aria-label="Open menu" aria-expanded="false">
-            <span></span><span></span><span></span>
+          <a class="btn btn-primary" href="#works">Gallery</a>
+
+          <button class="burger" id="burgerBtn" aria-label="Open menu" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
           </button>
         </div>
-      </div>
-
-      <!-- MOBILE DROPDOWN -->
-      <div class="mobile-menu" aria-hidden="true">
-        <div class="mobile-links">
-          <a href="#works" data-close>WORKS</a>
-          <a href="#faq" data-close>FAQ</a>
-          <a href="#contacts" data-close>CONTACT</a>
-        </div>
-
-        <div class="mobile-lang">
-          <button class="active" type="button" data-lang>EN</button>
-          <button type="button" data-lang>NL</button>
-        </div>
-
-        <a class="btn primary mobile-cta" href="#works" data-close>GALLERY</a>
       </div>
     </div>
   </div>
 
-  <!-- HERO (100vh, black) -->
-  <header id="top" class="hero">
-    <div class="container hero-content">
-      <div class="hero-grid">
-        <div class="hero-left">
-          <div class="kicker">Professional renovation &amp; decoration</div>
+  <!-- Mobile dropdown -->
+  <div class="scrim" id="scrim"></div>
+  <div class="mobile-panel" id="mobilePanel" aria-label="Mobile menu">
+    <div class="row">
+      <a href="#works" class="m-link">Works</a>
+      <a href="#faq" class="m-link">FAQ</a>
+      <a href="#contact" class="m-link">Contact</a>
+    </div>
+    <div class="row">
+      <div class="lang" aria-label="Language switcher">
+        <button class="active" type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="nl">NL</button>
+      </div>
+    </div>
+    <div class="row">
+      <a class="btn btn-primary" href="#works" style="display:block;text-align:center;text-decoration:none;">Gallery</a>
+    </div>
+  </div>
 
-          <h1 class="h1">
-            PERFECT FINISH.<br />
-            <span class="dim">REAL RESULTS.</span>
-          </h1>
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-left">
+        <div class="hero-kicker">PROFESSIONAL RENOVATION AND DECORATION</div>
 
-          <div class="sub">
-            PLASTER, DECORATIVE PLASTER, WALLPAPERS, LAMINATE — CLEAN WORK, MODERN STYLE, AND ATTENTION TO DETAILS.
+        <h1 class="hero-title">TRANSFORM&nbsp;YOUR<br>HOME&nbsp;TODAY.</h1>
+        <h2 class="hero-title muted">QUALITY&nbsp;YOU&nbsp;CAN&nbsp;TRUST.</h2>
+
+        <div class="hero-desc">
+          PLASTER, DECORATIVE PLASTER,<br>
+          WALLPAPERS, LAMINATE — CLEAN WORK,<br>
+          MODERN STYLE, AND ATTENTION TO DETAILS.
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#works">Explore works →</a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+
+        <div class="hero-stats" aria-label="Stats">
+          <div class="stat">
+            <div class="num">4</div>
+            <div class="lbl">Categories</div>
           </div>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#works">EXPLORE WORKS <span aria-hidden="true">→</span></a>
-            <a class="btn" href="#contacts">CONTACT</a>
+          <div class="stat">
+            <div class="num">100+</div>
+            <div class="lbl">Photos</div>
           </div>
-
-          <div class="stats">
-            <div class="stat"><strong>4</strong>CATEGORIES</div>
-            <div class="stat"><strong>100+</strong>PHOTOS</div>
-            <div class="stat"><strong>NL</strong>SERVICE AREA</div>
+          <div class="stat">
+            <div class="num">NL</div>
+            <div class="lbl">Service area</div>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <div class="section-divider" aria-hidden="true"></div>
+  <!-- Divider like Macroedges -->
+  <div class="divider"></div>
 
   <!-- WORKS -->
   <section id="works">
-    <div class="container">
-      <h2 class="h2" id="gallery-title">Our works</h2>
-      <p class="lead">
-        SELECT A CATEGORY TO VIEW PROJECT PHOTOS. CLICK ANY PHOTO TO OPEN FULL SCREEN.
-      </p>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Gallery</p>
+        <h2 class="section-title" id="gallery-title">Our works</h2>
+        <p class="section-sub">Select a category to view project photos. Click any photo to open full screen.</p>
+      </div>
 
       <div id="folders" class="folders-grid"></div>
       <div id="images" class="images-grid" style="display:none;"></div>
@@ -849,71 +901,77 @@
     </div>
   </section>
 
-  <div class="section-divider" aria-hidden="true"></div>
+  <div class="divider"></div>
 
-  <!-- FAQ (right after OUR WORKS) -->
+  <!-- FAQ (immediately after OUR WORKS) -->
   <section id="faq">
-    <div class="container">
-      <div class="kicker">FREQUENTLY ASKED QUESTIONS</div>
-      <h2 class="h2">COMMON QUESTIONS</h2>
-      <p class="lead">EVERYTHING YOU NEED TO KNOW ABOUT OUR WORKS AND PROCESS</p>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Frequently asked questions</p>
+        <h2 class="section-title">Common questions</h2>
+        <p class="section-sub">Everything you need to know about our renovation and finishing work.</p>
+      </div>
 
       <div class="faq-grid">
-        <div class="qa">
-          <h4>WHAT'S INCLUDED IN A PROJECT?</h4>
-          <p>PREPARATION, MATERIALS RECOMMENDATIONS, CLEAN FINISHING, AND PHOTO RESULTS.</p>
+        <div class="faq-item">
+          <div class="faq-q">What services do you provide?</div>
+          <p class="faq-a">Plaster, decorative plaster, wallpapers, and laminate — clean work and attention to details.</p>
         </div>
 
-        <div class="qa">
-          <h4>HOW FAST CAN YOU START?</h4>
-          <p>DEPENDS ON CURRENT SCHEDULE — MESSAGE US AND WE’LL CONFIRM THE NEAREST SLOT.</p>
+        <div class="faq-item">
+          <div class="faq-q">Do you work across the Netherlands?</div>
+          <p class="faq-a">Yes. We work in NL — message us with your location and we’ll confirm availability.</p>
         </div>
 
-        <div class="qa">
-          <h4>DO YOU WORK WITH MY MATERIALS?</h4>
-          <p>YES — OR WE CAN RECOMMEND AND PROVIDE A SHOPPING LIST BASED ON YOUR GOAL.</p>
+        <div class="faq-item">
+          <div class="faq-q">How do I get a quote?</div>
+          <p class="faq-a">Send photos and a short description via WhatsApp or Email — we’ll reply with next steps.</p>
         </div>
 
-        <div class="qa">
-          <h4>DO YOU DO SMALL JOBS?</h4>
-          <p>YES — FROM SINGLE WALLS TO FULL ROOMS AND COMPLEX DECORATIVE FINISHES.</p>
+        <div class="faq-item">
+          <div class="faq-q">How long does a project take?</div>
+          <p class="faq-a">Depends on scope and materials. We always confirm timeline before starting.</p>
         </div>
 
-        <div class="qa">
-          <h4>HOW DO YOU CALCULATE PRICE?</h4>
-          <p>BY AREA, MATERIALS, COMPLEXITY, AND PREP WORK. SEND PHOTOS FOR A QUICK ESTIMATE.</p>
+        <div class="faq-item">
+          <div class="faq-q">Do you help choose materials?</div>
+          <p class="faq-a">Yes. We can recommend options for durability, style, and budget.</p>
         </div>
 
-        <div class="qa">
-          <h4>WHERE DO YOU WORK?</h4>
-          <p>NETHERLANDS — CONTACT US WITH YOUR CITY AND WE’LL CONFIRM AVAILABILITY.</p>
+        <div class="faq-item">
+          <div class="faq-q">Do you offer guarantees?</div>
+          <p class="faq-a">We guarantee quality workmanship. Contact us if any issue appears after completion.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="section-divider" aria-hidden="true"></div>
+  <div class="divider"></div>
 
-  <!-- CONTACTS -->
-  <section id="contacts">
-    <div class="container">
-      <h2 class="h2">Contacts</h2>
-      <p class="lead">WRITE TO US — WE REPLY FAST AND CAN ESTIMATE YOUR PROJECT.</p>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Contact</p>
+        <h2 class="section-title">Contacts</h2>
+        <p class="section-sub">Reach out — we’ll answer fast and help you plan the job.</p>
+      </div>
 
-      <div class="contacts">
+      <div class="contacts-row">
         <a href="mailto:perfectschildersdecoratie@gmail.com">Email</a>
         <a href="https://wa.me/31619449568" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <div class="section-divider" aria-hidden="true"></div>
-
-  <!-- Bottom bar like Macroedges -->
-  <footer class="mini-footer">
-    <div class="container mini-footer-inner">
-      <div>© <span id="year"></span> PERFECT SCHILDERS &amp; DECORATIE</div>
-      <div>ALL RIGHTS RESERVED</div>
+  <!-- Footer divider + bar -->
+  <div class="divider"></div>
+  <footer>
+    <div class="wrap">
+      <div class="footer-bar">
+        <div>© <span id="year"></span> PERFECT SCHILDERS &amp; DECORATIE</div>
+        <div>All rights reserved</div>
+      </div>
     </div>
   </footer>
 
@@ -922,11 +980,9 @@
     <button class="lb-btn lb-close" onclick="event.stopPropagation(); closeLightbox();" aria-label="Close">×</button>
     <button class="lb-btn lb-prev" onclick="event.stopPropagation(); prevPhoto();" aria-label="Previous">‹</button>
     <button class="lb-btn lb-next" onclick="event.stopPropagation(); nextPhoto();" aria-label="Next">›</button>
-
     <div class="lb-counter" onclick="event.stopPropagation()">
       <span id="lbCounter">1 / 1</span>
     </div>
-
     <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
   </div>
 
@@ -937,7 +993,49 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
 /* =========================
-   FOLDERS DATA
+   MOBILE MENU
+========================= */
+const burgerBtn = document.getElementById("burgerBtn");
+const mobilePanel = document.getElementById("mobilePanel");
+const scrim = document.getElementById("scrim");
+
+function closeMobileMenu(){
+  mobilePanel.classList.remove("open");
+  scrim.classList.remove("open");
+}
+
+function openMobileMenu(){
+  mobilePanel.classList.add("open");
+  scrim.classList.add("open");
+}
+
+burgerBtn?.addEventListener("click", () => {
+  if (mobilePanel.classList.contains("open")) closeMobileMenu();
+  else openMobileMenu();
+});
+
+scrim.addEventListener("click", closeMobileMenu);
+
+// close when clicking any mobile link
+document.querySelectorAll(".m-link").forEach(a => {
+  a.addEventListener("click", () => closeMobileMenu());
+});
+
+/* =========================
+   LANGUAGE UI (EN / NL)
+   (UI only. You can later plug real translations.)
+========================= */
+function setLang(lang){
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+  });
+}
+document.querySelectorAll('[data-lang]').forEach(btn => {
+  btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang")));
+});
+
+/* =========================
+   GALLERY DATA (same as your current)
 ========================= */
 const folders = {
   plaster: {
@@ -1074,8 +1172,8 @@ let lightboxPushed = false;
    RENDER FOLDERS
 ========================= */
 function renderFolders(){
-  foldersDiv.innerHTML = Object.entries(folders).map(([key, obj], idx) => `
-    <div class="folder-card" style="--i:${idx}" onclick="openFolderClick(this,'${key}')">
+  foldersDiv.innerHTML = Object.entries(folders).map(([key, obj]) => `
+    <div class="folder-card" onclick="openFolderClick(this,'${key}')">
       <div class="folder-thumb">
         <img src="${obj.preview}" alt="${obj.title} preview">
       </div>
@@ -1087,14 +1185,14 @@ function renderFolders(){
           </svg>
           <div class="folder-title">${obj.title}</div>
         </div>
-        <div class="folder-cta">OPEN</div>
+        <div class="folder-pill">Open</div>
       </div>
     </div>
   `).join("");
 }
 
 /* =========================
-   UI: HOME / FOLDER
+   HOME / FOLDER UI
 ========================= */
 function showHome(){
   currentFolderKey = null;
@@ -1131,10 +1229,10 @@ function showFolderUI(key){
 }
 
 /* =========================
-   FOLDER NAV (hash)
+   ROUTING BY HASH (folders)
 ========================= */
 function openFolder(key){
-  location.hash = key;
+  location.hash = "g-" + key;
 }
 
 function openFolderClick(card, key){
@@ -1150,7 +1248,8 @@ function goBack(){
 }
 
 function handleRoute(){
-  const key = (location.hash || "").replace("#", "");
+  const raw = (location.hash || "").replace("#", "");
+  const key = raw.startsWith("g-") ? raw.replace("g-","") : "";
   if (key && folders[key]) showFolderUI(key);
   else showHome();
 }
@@ -1158,7 +1257,7 @@ function handleRoute(){
 window.addEventListener("hashchange", handleRoute);
 
 /* =========================
-   LIGHTBOX + COUNTER
+   LIGHTBOX
 ========================= */
 function updateLightboxUI(){
   lbCounter.textContent = `${currentIndex + 1} / ${currentList.length}`;
@@ -1194,15 +1293,11 @@ function closeLightbox(fromPopstate = false){
     history.back();
     return;
   }
-
   if (fromPopstate) {
     lightboxPushed = false;
   }
 }
 
-/* =========================
-   PREV / NEXT
-========================= */
 function nextPhoto(){
   if (!currentList.length) return;
   currentIndex = (currentIndex + 1) % currentList.length;
@@ -1215,20 +1310,14 @@ function prevPhoto(){
   showLightboxImage();
 }
 
-/* =========================
-   KEYBOARD
-========================= */
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("open")) return;
-
   if (e.key === "Escape") closeLightbox();
   if (e.key === "ArrowRight") nextPhoto();
   if (e.key === "ArrowLeft") prevPhoto();
 });
 
-/* =========================
-   SWIPE (mobile)
-========================= */
+/* Swipe */
 let touchStartX = 0;
 let touchStartY = 0;
 
@@ -1250,87 +1339,15 @@ lightboxImg.addEventListener("touchend", (e) => {
   else nextPhoto();
 }, { passive: true });
 
-/* =========================
-   BACK: if lightbox open, Back closes only it
-========================= */
 window.addEventListener("popstate", () => {
   if (lightbox.classList.contains("open")) {
     closeLightbox(true);
   }
 });
 
-/* =========================
-   INIT
-========================= */
+/* INIT */
 renderFolders();
 handleRoute();
-
-/* =========================
-   Language toggle (visual only): EN / NL
-========================= */
-const langButtons = document.querySelectorAll(".lang button");
-langButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    langButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    // sync with mobile
-    const val = btn.textContent.trim();
-    document.querySelectorAll(".mobile-lang [data-lang]").forEach(b => {
-      b.classList.toggle("active", b.textContent.trim() === val);
-    });
-  });
-});
-
-/* =========================
-   Mobile menu toggle
-========================= */
-const burger = document.querySelector(".burger");
-const mobileMenu = document.querySelector(".mobile-menu");
-
-function setMenu(open){
-  if(!burger || !mobileMenu) return;
-  mobileMenu.classList.toggle("open", open);
-  burger.setAttribute("aria-expanded", open ? "true" : "false");
-  mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
-}
-
-if (burger && mobileMenu){
-  burger.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.contains("open");
-    setMenu(!isOpen);
-  });
-
-  // close on link click
-  mobileMenu.querySelectorAll("[data-close]").forEach(el => {
-    el.addEventListener("click", () => setMenu(false));
-  });
-
-  // close on outside click
-  document.addEventListener("click", (e) => {
-    const inside = mobileMenu.contains(e.target) || burger.contains(e.target);
-    if (!inside) setMenu(false);
-  });
-
-  // close on Esc
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setMenu(false);
-  });
-}
-
-// Mobile language (visual only)
-document.querySelectorAll(".mobile-lang [data-lang]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".mobile-lang [data-lang]").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    // sync with desktop pills
-    const val = btn.textContent.trim();
-    document.querySelectorAll(".lang button").forEach(b => {
-      b.classList.toggle("active", b.textContent.trim() === val);
-    });
-  });
-});
 </script>
 
 </body>
