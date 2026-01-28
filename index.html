@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Perfect Schilders & Decoratie</title>
+  <title>PERFECT SCHILDERS & DECORATIE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/favicon.png">
 
@@ -52,37 +52,66 @@
       margin-inline:auto;
     }
 
-    /* ===== TOPBAR (как на скрине) ===== */
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(5,6,7,.65);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    /* Thin divider line like Macroedges */
+    .section-divider{
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,.06);
     }
+
+    /* ===== BOXED NAVBAR (like Macroedges) ===== */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: transparent;
+      padding: 16px 0;
+    }
+
+    .nav-box{
+      width: min(980px, calc(100% - 48px));
+      margin: 0 auto;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(5,6,7,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+
     .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:14px 0;
-      gap:18px;
+      padding: 12px 14px;
+      gap: 18px;
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight:700;
-      letter-spacing:.6px;
+      font-weight:800;
+      letter-spacing:.8px;
       text-transform:uppercase;
+      min-width: 0;
     }
+
     .brand-mark{
       width:20px;height:20px;
       border:1px solid rgba(255,255,255,.25);
       border-radius:6px;
       display:grid; place-items:center;
       opacity:.95;
+      flex:0 0 auto;
     }
+
+    .brand-text{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 420px;
+    }
+
     .nav-links{
       display:flex;
       align-items:center;
@@ -91,6 +120,7 @@
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:1px;
+      flex: 0 0 auto;
     }
     .nav-links a{ opacity:.85; }
     .nav-links a:hover{ opacity:1; color:var(--text); }
@@ -99,7 +129,9 @@
       display:flex;
       align-items:center;
       gap:12px;
+      flex: 0 0 auto;
     }
+
     .lang{
       display:flex;
       gap:8px;
@@ -130,7 +162,7 @@
       border:1px solid rgba(255,255,255,.16);
       padding:10px 14px;
       border-radius:10px;
-      font-weight:600;
+      font-weight:700;
       font-size:12px;
       letter-spacing:1px;
       text-transform:uppercase;
@@ -139,21 +171,27 @@
       gap:8px;
       cursor:pointer;
       background: rgba(0,0,0,.25);
+      flex: 0 0 auto;
+      white-space: nowrap;
     }
     .btn:hover{ border-color: rgba(255,255,255,.28); }
     .btn.primary{
       background: var(--white);
       color: #0a0b0c;
       border-color: var(--white);
+      border-radius: 10px;
+      padding: 10px 16px;
     }
     .btn.primary:hover{ filter: brightness(.95); }
 
-    /* ===== HERO ===== */
+    /* ===== HERO (full screen) ===== */
     header.hero{
       position: relative;
-      padding:64px 0 34px;
+      min-height: 100vh;  /* full viewport */
+      display: flex;
+      align-items: center;
+      padding: 0;
       overflow:hidden;
-      border-bottom:1px solid rgba(255,255,255,.06);
     }
 
     .hero-bg{
@@ -176,10 +214,44 @@
     }
 
     .hero-content{
-      position:relative;
-      z-index:2;
-      padding: 42px 0 22px;
+      position: relative;
+      z-index: 2;
+      padding: 120px 0 80px; /* keep room for boxed nav */
+      width: 100%;
     }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 34px;
+      align-items:center;
+    }
+
+    .hero-right{
+      height: min(560px, 70vh);
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(600px 340px at 65% 45%, rgba(140,200,255,.12), transparent 58%),
+        radial-gradient(500px 260px at 45% 55%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,0));
+      opacity:.9;
+      position: relative;
+    }
+
+    .wire{
+      position:absolute;
+      inset:0;
+      opacity:.75;
+      background:
+        linear-gradient(110deg, transparent 0 64%, rgba(120,170,255,.35) 64% 65%, transparent 65% 100%),
+        linear-gradient(180deg, transparent 0 72%, rgba(120,170,255,.35) 72% 73%, transparent 73% 100%),
+        linear-gradient(30deg, transparent 0 78%, rgba(120,170,255,.30) 78% 79%, transparent 79% 100%);
+      mask-image: radial-gradient(closest-side at 70% 55%, rgba(0,0,0,1), rgba(0,0,0,0) 72%);
+      pointer-events:none;
+    }
+
     .kicker{
       color:var(--muted2);
       font-size:12px;
@@ -187,6 +259,7 @@
       text-transform:uppercase;
       margin-bottom:14px;
     }
+
     .h1{
       font-size: clamp(40px, 6vw, 68px);
       line-height:1.02;
@@ -237,6 +310,7 @@
       margin-bottom:6px;
     }
 
+    /* ===== Sections ===== */
     section{
       padding:64px 0;
     }
@@ -258,7 +332,7 @@
       max-width:860px;
     }
 
-    /* ===== GALLERY GRID ===== */
+    /* ===== WORKS GRID (folders) ===== */
     #folders.folders-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -368,7 +442,7 @@
 
     .folder-title{
       font-size:13px;
-      font-weight:700;
+      font-weight:800;
       letter-spacing:1px;
       text-transform:uppercase;
       white-space:nowrap;
@@ -417,7 +491,7 @@
       filter:saturate(1.03) contrast(1.03);
     }
 
-    /* back button */
+    /* Back button */
     .center-actions{
       text-align:center;
       margin-top:26px;
@@ -433,7 +507,7 @@
       text-transform:uppercase;
       letter-spacing:1px;
       font-size:12px;
-      font-weight:700;
+      font-weight:800;
     }
 
     #backBtn:hover{
@@ -441,7 +515,41 @@
       transform: translateY(-1px);
     }
 
-    /* contacts */
+    /* ===== FAQ (Macroedges style) ===== */
+    .faq-grid{
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .qa{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,0));
+      min-height: 140px;
+    }
+
+    .qa h4{
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .qa p{
+      margin: 0;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ===== Contacts ===== */
     .contacts{
       display:flex;
       flex-wrap:wrap;
@@ -460,7 +568,7 @@
       text-transform:uppercase;
       letter-spacing:1px;
       font-size:12px;
-      font-weight:700;
+      font-weight:800;
       transition:.18s;
     }
     .contacts a:hover{
@@ -469,7 +577,22 @@
       transform: translateY(-1px);
     }
 
-    /* ===== LIGHTBOX (оставил твою логику, чуть под стиль) ===== */
+    /* ===== Bottom mini footer bar ===== */
+    .mini-footer{
+      padding: 22px 0;
+      color: rgba(233,238,245,.55);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .mini-footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    /* ===== LIGHTBOX ===== */
     .lightbox{
       position: fixed;
       inset: 0;
@@ -539,34 +662,47 @@
       backdrop-filter: blur(8px);
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== Responsive ===== */
+    @media(max-width: 1060px){
+      .brand-text{ max-width: 260px; }
+    }
     @media(max-width: 980px){
       .nav-links{ display:none; }
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-right{ display:none; }
       #folders.folders-grid{ grid-template-columns:repeat(2,1fr); }
       #images.images-grid{ grid-template-columns:repeat(2,1fr); }
+      .faq-grid{ grid-template-columns: 1fr; }
       .h2{ font-size:36px; }
+    }
+    @media(max-width: 560px){
+      .nav-right .btn.primary{ display:none; } /* чтобы не теснило */
+      .brand-text{ max-width: 200px; }
     }
     @media(max-width: 520px){
       #folders.folders-grid{ grid-template-columns:1fr; }
       #images.images-grid{ grid-template-columns:1fr; }
+
       .lb-btn{ width: 58px; height: 58px; border-radius: 16px; }
       .lb-close{ top: 14px; left: 14px; }
       .lb-prev{ left: 12px; }
       .lb-next{ right: 12px; }
       .lb-counter{ bottom: 16px; }
+
+      .mini-footer-inner{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP NAV -->
+  <!-- BOXED NAV -->
   <div class="topbar">
-    <div class="container">
+    <div class="nav-box">
       <div class="nav">
         <a class="brand" href="#top">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span>PERFECT</span>
+          <span class="brand-text">PERFECT SCHILDERS &amp; DECORATIE</span>
         </a>
 
         <div class="nav-links">
@@ -577,8 +713,7 @@
         <div class="nav-right">
           <div class="lang" aria-label="Language">
             <button class="active" type="button">EN</button>
-            <button type="button">RU</button>
-            <button type="button">UA</button>
+            <button type="button">NL</button>
           </div>
           <a class="btn primary" href="#works">GALLERY</a>
         </div>
@@ -586,35 +721,44 @@
     </div>
   </div>
 
-  <!-- HERO -->
+  <!-- HERO (100vh) -->
   <header id="top" class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="kicker">Professional renovation & decoration</div>
 
-        <h1 class="h1">
-          PERFECT FINISH.<br />
-          <span class="dim">REAL RESULTS.</span>
-        </h1>
+    <div class="container hero-content">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="kicker">Professional renovation &amp; decoration</div>
 
-        <div class="sub">
-          PLASTER, DECORATIVE PLASTER, WALLPAPERS, LAMINATE — CLEAN WORK, MODERN STYLE, AND ATTENTION TO DETAILS.
+          <h1 class="h1">
+            PERFECT FINISH.<br />
+            <span class="dim">REAL RESULTS.</span>
+          </h1>
+
+          <div class="sub">
+            PLASTER, DECORATIVE PLASTER, WALLPAPERS, LAMINATE — CLEAN WORK, MODERN STYLE, AND ATTENTION TO DETAILS.
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#works">EXPLORE WORKS <span aria-hidden="true">→</span></a>
+            <a class="btn" href="#contacts">CONTACT</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong>4</strong>CATEGORIES</div>
+            <div class="stat"><strong>100+</strong>PHOTOS</div>
+            <div class="stat"><strong>NL</strong>SERVICE AREA</div>
+          </div>
         </div>
 
-        <div class="hero-actions">
-          <a class="btn primary" href="#works">EXPLORE WORKS <span aria-hidden="true">→</span></a>
-          <a class="btn" href="#contacts">CONTACT</a>
-        </div>
-
-        <div class="stats">
-          <div class="stat"><strong>4</strong>CATEGORIES</div>
-          <div class="stat"><strong>100+</strong>PHOTOS</div>
-          <div class="stat"><strong>NL</strong>SERVICE AREA</div>
+        <div class="hero-right" aria-hidden="true">
+          <div class="wire"></div>
         </div>
       </div>
     </div>
   </header>
+
+  <div class="section-divider" aria-hidden="true"></div>
 
   <!-- WORKS -->
   <section id="works">
@@ -633,17 +777,73 @@
     </div>
   </section>
 
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- FAQ (right after OUR WORKS) -->
+  <section id="faq">
+    <div class="container">
+      <div class="kicker">FREQUENTLY ASKED QUESTIONS</div>
+      <h2 class="h2">COMMON QUESTIONS</h2>
+      <p class="lead">EVERYTHING YOU NEED TO KNOW ABOUT OUR WORKS AND PROCESS</p>
+
+      <div class="faq-grid">
+        <div class="qa">
+          <h4>WHAT'S INCLUDED IN A PROJECT?</h4>
+          <p>PREPARATION, MATERIALS RECOMMENDATIONS, CLEAN FINISHING, AND PHOTO RESULTS.</p>
+        </div>
+
+        <div class="qa">
+          <h4>HOW FAST CAN YOU START?</h4>
+          <p>DEPENDS ON CURRENT SCHEDULE — MESSAGE US AND WE’LL CONFIRM THE NEAREST SLOT.</p>
+        </div>
+
+        <div class="qa">
+          <h4>DO YOU WORK WITH MY MATERIALS?</h4>
+          <p>YES — OR WE CAN RECOMMEND AND PROVIDE A SHOPPING LIST BASED ON YOUR GOAL.</p>
+        </div>
+
+        <div class="qa">
+          <h4>DO YOU DO SMALL JOBS?</h4>
+          <p>YES — FROM SINGLE WALLS TO FULL ROOMS AND COMPLEX DECORATIVE FINISHES.</p>
+        </div>
+
+        <div class="qa">
+          <h4>HOW DO YOU CALCULATE PRICE?</h4>
+          <p>BY AREA, MATERIALS, COMPLEXITY, AND PREP WORK. SEND PHOTOS FOR A QUICK ESTIMATE.</p>
+        </div>
+
+        <div class="qa">
+          <h4>WHERE DO YOU WORK?</h4>
+          <p>NETHERLANDS — CONTACT US WITH YOUR CITY AND WE’LL CONFIRM AVAILABILITY.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
   <!-- CONTACTS -->
   <section id="contacts">
     <div class="container">
       <h2 class="h2">Contacts</h2>
       <p class="lead">WRITE TO US — WE REPLY FAST AND CAN ESTIMATE YOUR PROJECT.</p>
+
       <div class="contacts">
         <a href="mailto:perfectschildersdecoratie@gmail.com">Email</a>
         <a href="https://wa.me/31619449568" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- Bottom bar like Macroedges -->
+  <footer class="mini-footer">
+    <div class="container mini-footer-inner">
+      <div>© <span id="year"></span> PERFECT SCHILDERS &amp; DECORATIE</div>
+      <div>ALL RIGHTS RESERVED</div>
+    </div>
+  </footer>
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
@@ -660,7 +860,12 @@
 
 <script>
 /* =========================
-   ДАННЫЕ ПАПОК
+   YEAR
+========================= */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* =========================
+   FOLDERS DATA
 ========================= */
 const folders = {
   plaster: {
@@ -774,7 +979,7 @@ const folders = {
 };
 
 /* =========================
-   ЭЛЕМЕНТЫ
+   ELEMENTS
 ========================= */
 const foldersDiv = document.getElementById("folders");
 const imagesDiv  = document.getElementById("images");
@@ -786,16 +991,15 @@ const lightboxImg = document.getElementById("lightboxImg");
 const lbCounter   = document.getElementById("lbCounter");
 
 /* =========================
-   СОСТОЯНИЕ
+   STATE
 ========================= */
 let currentFolderKey = null;
 let currentList = [];
 let currentIndex = 0;
-
-let lightboxPushed = false; // чтобы Back закрывал фото, а не уводил по hash
+let lightboxPushed = false; // so Back closes photo first
 
 /* =========================
-   РЕНДЕР ПАПОК
+   RENDER FOLDERS
 ========================= */
 function renderFolders(){
   foldersDiv.innerHTML = Object.entries(folders).map(([key, obj], idx) => `
@@ -818,7 +1022,7 @@ function renderFolders(){
 }
 
 /* =========================
-   UI: ГЛАВНАЯ / ПАПКА
+   UI: HOME / FOLDER
 ========================= */
 function showHome(){
   currentFolderKey = null;
@@ -855,10 +1059,10 @@ function showFolderUI(key){
 }
 
 /* =========================
-   НАВИГАЦИЯ ПО ПАПКАМ (hash)
+   FOLDER NAV (hash)
 ========================= */
 function openFolder(key){
-  location.hash = key; // Back/Forward браузера работает по папкам
+  location.hash = key;
 }
 
 function openFolderClick(card, key){
@@ -882,7 +1086,7 @@ function handleRoute(){
 window.addEventListener("hashchange", handleRoute);
 
 /* =========================
-   LIGHTBOX + СЧЕТЧИК
+   LIGHTBOX + COUNTER
 ========================= */
 function updateLightboxUI(){
   lbCounter.textContent = `${currentIndex + 1} / ${currentList.length}`;
@@ -902,7 +1106,6 @@ function openLightboxByIndex(idx){
   lightbox.classList.add("open");
   document.body.classList.add("no-scroll");
 
-  // добавляем шаг в историю, чтобы Back сначала закрывал фото
   if (!lightboxPushed) {
     history.pushState({ lightbox: true }, "", location.href);
     lightboxPushed = true;
@@ -914,15 +1117,12 @@ function closeLightbox(fromPopstate = false){
   lightboxImg.src = "";
   document.body.classList.remove("no-scroll");
 
-  // если закрыли НЕ через Back (например X/клик по фону),
-  // откатываем добавленный шаг истории сами
   if (!fromPopstate && lightboxPushed) {
     lightboxPushed = false;
     history.back();
     return;
   }
 
-  // если закрыли через Back — просто сбрасываем флаг
   if (fromPopstate) {
     lightboxPushed = false;
   }
@@ -944,7 +1144,7 @@ function prevPhoto(){
 }
 
 /* =========================
-   КНОПКИ КЛАВИАТУРЫ
+   KEYBOARD
 ========================= */
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("open")) return;
@@ -955,7 +1155,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* =========================
-   SWIPE НА ТЕЛЕФОНЕ
+   SWIPE (mobile)
 ========================= */
 let touchStartX = 0;
 let touchStartY = 0;
@@ -979,8 +1179,7 @@ lightboxImg.addEventListener("touchend", (e) => {
 }, { passive: true });
 
 /* =========================
-   BACK В БРАУЗЕРЕ:
-   если открыт лайтбокс — Back закрывает ТОЛЬКО его
+   BACK: if lightbox open, Back closes only it
 ========================= */
 window.addEventListener("popstate", () => {
   if (lightbox.classList.contains("open")) {
@@ -994,7 +1193,9 @@ window.addEventListener("popstate", () => {
 renderFolders();
 handleRoute();
 
-/* ===== fake language toggle (visual only) ===== */
+/* =========================
+   Language toggle (visual only): EN / NL
+========================= */
 const langButtons = document.querySelectorAll(".lang button");
 langButtons.forEach(btn => {
   btn.addEventListener("click", () => {
