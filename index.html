@@ -16,7 +16,7 @@
       --bg:#000;
       --text:#e9eef5;
       --muted:#8b95a7;
-      --muted2:#6e788a;
+      --muted2:#9CA3AF; /* requested */
       --border:rgba(255,255,255,.12);
       --border2:rgba(255,255,255,.08);
       --shadow: 0 20px 60px rgba(0,0,0,.55);
@@ -37,9 +37,43 @@
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #000; /* полностью черный */
+      background: #000; /* fully black */
       color:var(--text);
       letter-spacing:.2px;
+      position: relative;
+    }
+
+    /* ===== Subtle blue glows (like the first version) ===== */
+    body::before,
+    body::after{
+      content:"";
+      position: fixed;
+      inset: -20%;
+      pointer-events:none;
+      z-index: 0;
+      opacity: .55;
+      filter: blur(20px);
+    }
+
+    body::before{
+      background:
+        radial-gradient(600px 420px at 18% 12%,
+          rgba(64, 120, 255, .16),
+          rgba(64, 120, 255, 0) 60%),
+        radial-gradient(520px 360px at 80% 18%,
+          rgba(70, 160, 255, .10),
+          rgba(70, 160, 255, 0) 62%);
+    }
+
+    body::after{
+      background:
+        radial-gradient(700px 520px at 25% 78%,
+          rgba(64, 120, 255, .10),
+          rgba(64, 120, 255, 0) 65%),
+        radial-gradient(640px 460px at 85% 75%,
+          rgba(70, 160, 255, .08),
+          rgba(70, 160, 255, 0) 65%);
+      opacity: .45;
     }
 
     body.no-scroll{
@@ -52,6 +86,12 @@
     .container{
       width: min(var(--container), calc(100% - 48px));
       margin-inline:auto;
+    }
+
+    /* Ensure content above glows */
+    .topbar, header.hero, section, footer{
+      position: relative;
+      z-index: 1;
     }
 
     /* Thin divider line like Macroedges */
@@ -75,10 +115,13 @@
       margin: 0 auto;
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 14px;
-      background: rgba(5,6,7,.55);
+      background:
+        radial-gradient(500px 220px at 20% 10%, rgba(64,120,255,.10), transparent 60%),
+        radial-gradient(420px 200px at 85% 20%, rgba(70,160,255,.08), transparent 62%),
+        rgba(5,6,7,.55);
       backdrop-filter: blur(10px);
       box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      overflow: hidden; /* to clip mobile dropdown edges */
+      overflow: hidden; /* clip mobile dropdown edges */
     }
 
     .nav{
@@ -211,7 +254,7 @@
     .burger span:nth-child(2){ top:19px; opacity:.9; }
     .burger span:nth-child(3){ top:26px; }
 
-    /* Mobile dropdown panel (like Macroedges) */
+    /* Mobile dropdown panel */
     .mobile-menu{
       display:none;
       border-top:1px solid rgba(255,255,255,.10);
@@ -280,16 +323,16 @@
     .hero-content{
       position: relative;
       z-index: 2;
-      padding: 120px 0 80px; /* keep room for boxed nav */
+      padding: 120px 0 80px;
       width: 100%;
     }
 
     .hero-grid{ display:block; }
 
-    /* shift text right on desktop (like Macroedges) */
+    /* Desktop offset */
     .hero-left{
-      max-width:640px;
-      margin-left:clamp(220px, 22vw, 640px);
+      max-width: 760px;
+      margin-left: clamp(220px, 22vw, 640px);
       transform:none;
     }
 
@@ -301,9 +344,8 @@
       }
     }
 
-    /* UPDATED: kicker color should be 9CA3AF */
     .kicker{
-      color:#9CA3AF;
+      color: var(--muted2); /* requested */
       font-size:12px;
       letter-spacing:2px;
       text-transform:uppercase;
@@ -317,24 +359,16 @@
       letter-spacing:-1.2px;
       text-transform:uppercase;
     }
-    /* We'll keep .dim for other places, but NOT using it in hero headline anymore */
-    .h1 .dim{ color: rgba(233,238,245,.55); }
+    .h1 .dim{ color: #9CA3AF; } /* requested */
 
-    /* UPDATED: sub color should be 9CA3AF */
     .sub{
       max-width:640px;
-      color:#9CA3AF;
+      color: var(--muted2); /* requested */
       font-size:12px;
       line-height:1.7;
       text-transform:uppercase;
       letter-spacing:1px;
       margin-top:18px;
-    }
-
-    /* NEW: second hero line in grey 9CA3AF */
-    .hero-gray{
-      color:#9CA3AF;
-      display:block;
     }
 
     .hero-actions{
@@ -400,7 +434,9 @@
       border:1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
       overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,0));
+      background:
+        radial-gradient(520px 320px at 20% 0%, rgba(64,120,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,0));
       box-shadow: 0 10px 40px rgba(0,0,0,.35);
 
       opacity:0;
@@ -721,7 +757,7 @@
       .brand-text{ max-width: 260px; }
     }
 
-    /* Mobile layout like Macroedges: hide desktop links/pills, show burger and dropdown */
+    /* Mobile: hide desktop links/pills, show burger and dropdown */
     @media (max-width: 980px){
       .nav-links{ display:none; }
       .nav-right .lang{ display:none; }
@@ -736,7 +772,6 @@
       .faq-grid{ grid-template-columns: 1fr; }
       .h2{ font-size:36px; }
 
-      /* On mobile, no extra left shift */
       .hero-left{ margin-left: 0; }
     }
 
@@ -808,17 +843,17 @@
     </div>
   </div>
 
-  <!-- HERO (100vh, black) -->
+  <!-- HERO -->
   <header id="top" class="hero">
     <div class="container hero-content">
       <div class="hero-grid">
         <div class="hero-left">
-          <div class="kicker">PROFESSIONAL RENOVATION &amp; DECORATION</div>
+          <div class="kicker">PROFESSIONAL RENOVATION AND DECORATION</div>
 
           <h1 class="h1">
             TRANSFORM&nbsp;YOUR<br />
             HOME&nbsp;TODAY.<br />
-            <span class="hero-gray">QUALITY&nbsp;YOU&nbsp;CAN&nbsp;TRUST.</span>
+            <span class="dim">QUALITY YOU CAN TRUST.</span>
           </h1>
 
           <div class="sub">
@@ -861,7 +896,7 @@
 
   <div class="section-divider" aria-hidden="true"></div>
 
-  <!-- FAQ (right after OUR WORKS) -->
+  <!-- FAQ -->
   <section id="faq">
     <div class="container">
       <div class="kicker">FREQUENTLY ASKED QUESTIONS</div>
@@ -919,7 +954,7 @@
 
   <div class="section-divider" aria-hidden="true"></div>
 
-  <!-- Bottom bar like Macroedges -->
+  <!-- Bottom bar -->
   <footer class="mini-footer">
     <div class="container mini-footer-inner">
       <div>© <span id="year"></span> PERFECT SCHILDERS &amp; DECORATIE</div>
@@ -1284,7 +1319,6 @@ langButtons.forEach(btn => {
     langButtons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    // sync with mobile
     const val = btn.textContent.trim();
     document.querySelectorAll(".mobile-lang [data-lang]").forEach(b => {
       b.classList.toggle("active", b.textContent.trim() === val);
@@ -1334,7 +1368,6 @@ document.querySelectorAll(".mobile-lang [data-lang]").forEach(btn => {
     document.querySelectorAll(".mobile-lang [data-lang]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    // sync with desktop pills
     const val = btn.textContent.trim();
     document.querySelectorAll(".lang button").forEach(b => {
       b.classList.toggle("active", b.textContent.trim() === val);
