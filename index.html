@@ -287,23 +287,23 @@
     .hero-grid{ display:block; }
 
     /* shift text right on desktop (like Macroedges) */
-   .hero-left{
-  max-width:640px;
-  margin-left:clamp(220px, 22vw, 640px);
-  transform:none;
-}
+    .hero-left{
+      max-width:640px;
+      margin-left:clamp(220px, 22vw, 640px);
+      transform:none;
+    }
 
-@media(max-width: 980px){
-  .hero-left{
-    margin-left:0;
-    max-width:720px;
-    transform:none;
-  }
-}
+    @media(max-width: 980px){
+      .hero-left{
+        margin-left:0;
+        max-width:720px;
+        transform:none;
+      }
+    }
 
-
+    /* UPDATED: kicker color should be 9CA3AF */
     .kicker{
-      color:var(--muted2);
+      color:#9CA3AF;
       font-size:12px;
       letter-spacing:2px;
       text-transform:uppercase;
@@ -317,16 +317,24 @@
       letter-spacing:-1.2px;
       text-transform:uppercase;
     }
+    /* We'll keep .dim for other places, but NOT using it in hero headline anymore */
     .h1 .dim{ color: rgba(233,238,245,.55); }
 
+    /* UPDATED: sub color should be 9CA3AF */
     .sub{
       max-width:640px;
-      color:var(--muted);
+      color:#9CA3AF;
       font-size:12px;
       line-height:1.7;
       text-transform:uppercase;
       letter-spacing:1px;
       margin-top:18px;
+    }
+
+    /* NEW: second hero line in grey 9CA3AF */
+    .hero-gray{
+      color:#9CA3AF;
+      display:block;
     }
 
     .hero-actions{
@@ -805,11 +813,12 @@
     <div class="container hero-content">
       <div class="hero-grid">
         <div class="hero-left">
-          <div class="kicker">Professional renovation &amp; decoration</div>
+          <div class="kicker">PROFESSIONAL RENOVATION &amp; DECORATION</div>
 
           <h1 class="h1">
-            PERFECT FINISH.<br />
-            <span class="dim">REAL RESULTS.</span>
+            TRANSFORM&nbsp;YOUR<br />
+            HOME&nbsp;TODAY.<br />
+            <span class="hero-gray">QUALITY&nbsp;YOU&nbsp;CAN&nbsp;TRUST.</span>
           </h1>
 
           <div class="sub">
