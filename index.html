@@ -335,20 +335,39 @@
 
     .hero-grid{ display:block; }
 
-    /* desktop positioning (your current “good” variant) */
-    .hero-left{
-      max-width:640px;
-      margin-left:clamp(220px, 22vw, 640px);
-      transform:none;
-    }
+   .hero-grid{
+  display:flex;
+  justify-content:center;
+}
 
-    @media(max-width: 980px){
-      .hero-left{
-        margin-left:0;
-        max-width:720px;
-        transform:none;
-      }
-    }
+.hero-left{
+  max-width: 760px;
+  margin-left: 0;
+  text-align: center;
+}
+
+/* Кнопки и статы тоже по центру */
+.hero-actions{
+  justify-content: center;
+}
+
+.stats{
+  justify-content: center;
+}
+
+.stat{
+  border-right: 1px solid rgba(255,255,255,.10);
+}
+.stat:last-child{ border-right: 0; }
+
+/* На мобиле всё так же по центру */
+@media(max-width: 980px){
+  .hero-left{
+    max-width: 720px;
+    text-align: center;
+  }
+}
+
 
     .kicker{
       color: var(--hero-muted);
