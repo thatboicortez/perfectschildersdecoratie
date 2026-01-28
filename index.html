@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perfect Schilders & Decoratie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f0f0f;
+      --panel:#111;
+      --panel2:#171717;
+      --text:#fff;
+      --muted:#bbb;
+      --link:#4da3ff;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:'Montserrat', Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body.no-scroll{
+      overflow:hidden;
+      touch-action:none;
+    }
+
+    /* ===== HEADER ===== */
+    header{
+      position: relative;
+      padding: 70px 20px 55px;
+      text-align:center;
+      overflow: hidden;
+      background: url("header-bg.png") center/cover no-repeat;
+    }
+
+    header::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,0.05) 0%,
+          rgba(0,0,0,0.35) 70%,
+          rgba(0,0,0,0.55) 100%),
+        linear-gradient(180deg,
+          rgba(0,0,0,0.25),
+          rgba(0,0,0,0.45));
+      pointer-events:none;
+      z-index:0;
+    }
+
+    header > *{ position:relative; z-index:1; }
+
+    header h1{
+      font-size:42px;
+      margin:0 0 10px;
+      font-weight:700;
+    }
+
+    /* ===== SLOGAN ===== */
+    @keyframes sloganFadeUp{
+      from{opacity:0; transform:translateY(14px); filter:blur(6px);}
+      to{opacity:1; transform:none; filter:none;}
+    }
+
+    .slogan{
+      margin-top:26px;
+      display:grid;
+      gap:10px;
+      justify-items:center;
+      animation:sloganFadeUp .9s ease-out both;
+      animation-delay:.12s;
+    }
+
+    .slogan-small{
+      font-size:14px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.78);
+      font-weight:500;
+    }
+
+    .slogan-big{
+      font-size:clamp(32px,6vw,64px);
+      line-height:1.1;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      font-weight:300;
+      text-align:center;
+      padding:0 20px;
+    }
+
+    .slogan-line{
+      width:140px;
+      height:1px;
+      background:linear-gradient(to right,transparent,rgba(255,255,255,.6),transparent);
+      margin-top:12px;
+    }
+
+    section{
+      padding:60px 20px;
+      max-width:1100px;
+      margin:auto;
+    }
+
+    h2{
+      text-align:center;
+      margin:0 0 40px;
+      font-size:32px;
+      font-weight:700;
+    }
+
+    /* ===== FOLDERS GRID ===== */
+    #folders.folders-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+      max-width:1000px;
+      margin:0 auto;
+    }
+
+    /* ===== FOLDER CARD ===== */
+    .folder-card{
+      cursor:pointer;
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+      opacity:0;
+      animation:folderFade .6s ease forwards;
+      animation-delay:calc(var(--i,0)*.08s);
+
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      will-change:transform;
+    }
+
+    @keyframes folderFade{ to{opacity:1;} }
+
+    @media (hover:hover) and (pointer:fine){
+      .folder-card:hover{
+        transform:translateY(-8px) scale(1.03);
+        border-color:rgba(255,255,255,.16);
+        box-shadow:0 22px 60px rgba(0,0,0,.6);
+      }
+    }
+
+    .folder-card:active,
+    .folder-card.is-opening{
+      transform:translateY(-3px) scale(1.01);
+    }
+
+    .folder-thumb{
+      width:100%;
+      aspect-ratio:16/10;
+      background:#0b0b0b;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .folder-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.02);
+      filter:saturate(1.05) contrast(1.05);
+    }
+
+    .folder-thumb::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.18) 45%,transparent 60%);
+      transform:translateX(-60%) rotate(10deg);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .folder-card:hover .folder-thumb::after{
+      opacity:1;
+      animation:shine .9s ease forwards;
+    }
+
+    @keyframes shine{
+      from{transform:translateX(-60%) rotate(10deg);}
+      to{transform:translateX(60%) rotate(10deg);}
+    }
+
+    .folder-bar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      background:rgba(0,0,0,.35);
+      border-top:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(6px);
+      transition:background .25s ease, border-color .25s ease;
+    }
+
+    .folder-card:hover .folder-bar{
+      background:rgba(0,0,0,.45);
+      border-color:rgba(255,255,255,.14);
+    }
+
+    .folder-icon{
+      width:18px;
+      opacity:.9;
+      transition:transform .25s ease, opacity .25s ease;
+    }
+
+    .folder-card:hover .folder-icon{
+      transform:scale(1.08);
+      opacity:1;
+    }
+
+    .folder-title{
+      font-size:16px;
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+
+    /* ===== IMAGES GRID ===== */
+    #images.images-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      max-width:1000px;
+      margin:0 auto;
+    }
+
+    .img-tile{
+      border-radius:14px;
+      overflow:hidden;
+      background:#0b0b0b;
+      border:1px solid rgba(255,255,255,.08);
+      cursor:pointer;
+      transition:transform .18s ease, border-color .18s ease;
+    }
+
+    .img-tile:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.16);
+    }
+
+    .img-tile img{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* back button */
+    .center-actions{text-align:center;margin-top:28px;}
+    #backBtn{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s;
+    }
+
+    #backBtn:hover{
+      background:rgba(255,255,255,.12);
+      transform:translateY(-1px);
+    }
+
+    /* contacts */
+    .contacts{text-align:center;font-size:18px;}
+    .contacts a{
+      margin: 10px 28px;
+      color: rgba(255,255,255,0.45);
+      text-decoration:none;
+    }
+    .contacts a:hover{
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* responsive */
+    @media(max-width:900px){
+      #folders.folders-grid{grid-template-columns:repeat(2,1fr);}
+      #images.images-grid{grid-template-columns:repeat(2,1fr);}
+    }
+    @media(max-width:520px){
+      #folders.folders-grid{grid-template-columns:1fr;}
+      header h1{font-size:34px;}
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .lightbox.open{ display:flex; }
+
+    .lightbox-inner{
+      position:relative;
+      width:min(980px, 95vw);
+      max-height: 90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .lightbox img{
+      max-width: 95vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      user-select:none;
+      -webkit-user-drag:none;
+      touch-action:pan-y;
+    }
+
+ /* ===== Lightbox controls - fixed (как было раньше) ===== */
+.lb-btn{
+  position: fixed;              /* <-- вот это делает статично по экрану */
+  z-index: 10001;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: 34px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lb-btn:hover{
+  background: rgba(255,255,255,.12);
+}
+
+.lb-close{
+  top: 18px;
+  left: 18px;                  /* крестик всегда сверху слева */
+  font-size: 30px;
+}
+
+.lb-prev{
+  left: 18px;                   /* стрелка всегда по краю */
+}
+
+.lb-next{
+  right: 18px;                  /* стрелка всегда по краю */
+}
+
+.lb-prev,
+.lb-next{
+  top: 50%;
+  transform: translateY(-50%);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 0.75;
+  padding-bottom: 4px; /* пробуй 2–6px */
+}
+
+.lb-counter{
+  position: fixed;              /* счетчик тоже статичный */
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 10001;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.35);
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+}
+
+/* на телефоне делаем кнопки чуть больше */
+@media (max-width: 520px){
+  .lb-btn{
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+  }
+  .lb-close{ top: 14px; left: 14px; }
+  .lb-prev{ left: 12px; }
+  .lb-next{ right: 12px; }
+  .lb-counter{ bottom: 16px; }
+}
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>Perfect Schilders & Decoratie</h1>
+  <div class="slogan">
+    <div class="slogan-small">Quality You Can Trust</div>
+    <div class="slogan-big">Transform&nbsp;Your<br>Home&nbsp;Today</div>
+    <div class="slogan-line"></div>
+  </div>
+</header>
+
+<section>
+  <h2 id="gallery-title">Our works</h2>
+  <div id="folders" class="folders-grid"></div>
+  <div id="images" class="images-grid" style="display:none;"></div>
+  <div class="center-actions">
+    <button id="backBtn" onclick="goBack()" style="display:none;">← Back</button>
+  </div>
+</section>
+
+<section>
+  <h2>Contacts</h2>
+  <div class="contacts">
+    <a href="mailto:perfectschildersdecoratie@gmail.com">Email</a>
+    <a href="https://wa.me/31619449568" target="_blank">WhatsApp</a>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <button class="lb-btn lb-close" onclick="event.stopPropagation(); closeLightbox();" aria-label="Close">×</button>
+
+  <button class="lb-btn lb-prev" onclick="event.stopPropagation(); prevPhoto();" aria-label="Previous">‹</button>
+  <button class="lb-btn lb-next" onclick="event.stopPropagation(); nextPhoto();" aria-label="Next">›</button>
+
+  <div class="lb-counter" onclick="event.stopPropagation()">
+    <span id="lbCounter">1 / 1</span>
+  </div>
+
+  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
+<script>
+/* =========================
+   ДАННЫЕ ПАПОК
+========================= */
+const folders = {
+  plaster: {
+    title: "Plaster",
+    preview: "previews/plaster-preview.png",
+    images: [
+      "gallery/plaster/plaster (1).jpg",
+      "gallery/plaster/plaster (2).jpg"
+    ]
+  },
+  decorative_plaster: {
+    title: "Decorative plaster",
+    preview: "previews/decorativeplaster-preview.png",
+    images: [
+      "gallery/decorative_plaster/decorative_plaster (1).jpg",
+      "gallery/decorative_plaster/decorative_plaster (2).jpg",
+      "gallery/decorative_plaster/decorative_plaster (3).jpg",
+      "gallery/decorative_plaster/decorative_plaster (4).jpg",
+      "gallery/decorative_plaster/decorative_plaster (5).jpg",
+      "gallery/decorative_plaster/decorative_plaster (6).jpg",
+      "gallery/decorative_plaster/decorative_plaster (7).jpg",
+      "gallery/decorative_plaster/decorative_plaster (8).jpg",
+      "gallery/decorative_plaster/decorative_plaster (9).jpg",
+      "gallery/decorative_plaster/decorative_plaster (10).jpg",
+      "gallery/decorative_plaster/decorative_plaster (11).jpg",
+      "gallery/decorative_plaster/decorative_plaster (12).jpg",
+      "gallery/decorative_plaster/decorative_plaster (13).jpg",
+      "gallery/decorative_plaster/decorative_plaster (14).jpg",
+      "gallery/decorative_plaster/decorative_plaster (15).jpg",
+      "gallery/decorative_plaster/decorative_plaster (16).jpg",
+      "gallery/decorative_plaster/decorative_plaster (17).jpg",
+      "gallery/decorative_plaster/decorative_plaster (18).jpg",
+      "gallery/decorative_plaster/decorative_plaster (19).jpg",
+      "gallery/decorative_plaster/decorative_plaster (20).jpg",
+      "gallery/decorative_plaster/decorative_plaster (21).jpg",
+      "gallery/decorative_plaster/decorative_plaster (22).jpg",
+      "gallery/decorative_plaster/decorative_plaster (23).jpg",
+      "gallery/decorative_plaster/decorative_plaster (24).jpg",
+      "gallery/decorative_plaster/decorative_plaster (25).jpg",
+      "gallery/decorative_plaster/decorative_plaster (26).jpg",
+      "gallery/decorative_plaster/decorative_plaster (27).jpg",
+      "gallery/decorative_plaster/decorative_plaster (28).jpg",
+      "gallery/decorative_plaster/decorative_plaster (29).jpg",
+      "gallery/decorative_plaster/decorative_plaster (30).jpg",
+      "gallery/decorative_plaster/decorative_plaster (31).jpg",
+      "gallery/decorative_plaster/decorative_plaster (32).jpg",
+      "gallery/decorative_plaster/decorative_plaster (33).jpg",
+      "gallery/decorative_plaster/decorative_plaster (34).jpg",
+      "gallery/decorative_plaster/decorative_plaster (35).jpg",
+      "gallery/decorative_plaster/decorative_plaster (36).jpg",
+      "gallery/decorative_plaster/decorative_plaster (37).jpg",
+      "gallery/decorative_plaster/decorative_plaster (38).jpg",
+      "gallery/decorative_plaster/decorative_plaster (39).jpg",
+      "gallery/decorative_plaster/decorative_plaster (40).jpg",
+      "gallery/decorative_plaster/decorative_plaster (41).jpg",
+      "gallery/decorative_plaster/decorative_plaster (42).jpg",
+      "gallery/decorative_plaster/decorative_plaster (43).jpg",
+      "gallery/decorative_plaster/decorative_plaster (44).jpg",
+      "gallery/decorative_plaster/decorative_plaster (45).jpg",
+      "gallery/decorative_plaster/decorative_plaster (46).jpg",
+      "gallery/decorative_plaster/decorative_plaster (47).jpg",
+      "gallery/decorative_plaster/decorative_plaster (48).jpg",
+      "gallery/decorative_plaster/decorative_plaster (49).jpg",
+      "gallery/decorative_plaster/decorative_plaster (50).jpg",
+      "gallery/decorative_plaster/decorative_plaster (51).jpg",
+      "gallery/decorative_plaster/decorative_plaster (52).jpg",
+      "gallery/decorative_plaster/decorative_plaster (53).jpg",
+      "gallery/decorative_plaster/decorative_plaster (54).jpg",
+      "gallery/decorative_plaster/decorative_plaster (55).jpg",
+      "gallery/decorative_plaster/decorative_plaster (56).jpg",
+      "gallery/decorative_plaster/decorative_plaster (57).jpg",
+      "gallery/decorative_plaster/decorative_plaster (58).jpg",
+      "gallery/decorative_plaster/decorative_plaster (59).jpg",
+      "gallery/decorative_plaster/decorative_plaster (60).jpg",
+      "gallery/decorative_plaster/decorative_plaster (61).jpg",
+      "gallery/decorative_plaster/decorative_plaster (62).jpg",
+      "gallery/decorative_plaster/decorative_plaster (63).jpg",
+      "gallery/decorative_plaster/decorative_plaster (64).jpg",
+      "gallery/decorative_plaster/decorative_plaster (65).jpg",
+      "gallery/decorative_plaster/decorative_plaster (66).jpg",
+      "gallery/decorative_plaster/decorative_plaster (67).jpg",
+      "gallery/decorative_plaster/decorative_plaster (68).jpg",
+      "gallery/decorative_plaster/decorative_plaster (69).jpg",
+      "gallery/decorative_plaster/decorative_plaster (70).jpg",
+      "gallery/decorative_plaster/decorative_plaster (71).jpg",
+      "gallery/decorative_plaster/decorative_plaster (72).jpg",
+      "gallery/decorative_plaster/decorative_plaster (73).jpg",
+      "gallery/decorative_plaster/decorative_plaster (74).jpg",
+      "gallery/decorative_plaster/decorative_plaster (75).jpg"
+    ]
+  },
+  wallpapers: {
+    title: "Wallpapers",
+    preview: "previews/wallpapers-preview.png",
+    images: [
+      "gallery/wallpapers/wallpapers (2).jpg",
+      "gallery/wallpapers/IMG_2780.jpeg",
+      "gallery/wallpapers/IMG_2781.jpeg",
+      "gallery/wallpapers/IMG_2782.jpeg",
+      "gallery/wallpapers/IMG_2783.jpeg",
+      "gallery/wallpapers/IMG_2784.jpeg"
+    ]
+  },
+  laminate: {
+    title: "Laminate",
+    preview: "previews/laminate-preview.png",
+    images: [
+      "gallery/laminate/laminate (1).jpg"
+    ]
+  }
+};
+
+/* =========================
+   ЭЛЕМЕНТЫ
+========================= */
+const foldersDiv = document.getElementById("folders");
+const imagesDiv  = document.getElementById("images");
+const backBtn    = document.getElementById("backBtn");
+const titleEl    = document.getElementById("gallery-title");
+
+const lightbox    = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lbCounter   = document.getElementById("lbCounter");
+
+/* =========================
+   СОСТОЯНИЕ
+========================= */
+let currentFolderKey = null;
+let currentList = [];
+let currentIndex = 0;
+
+let lightboxPushed = false; // чтобы Back закрывал фото, а не уводил по hash
+
+/* =========================
+   РЕНДЕР ПАПОК
+========================= */
+function renderFolders(){
+  foldersDiv.innerHTML = Object.entries(folders).map(([key, obj], idx) => `
+    <div class="folder-card" style="--i:${idx}" onclick="openFolderClick(this,'${key}')">
+      <div class="folder-thumb">
+        <img src="${obj.preview}" alt="${obj.title} preview">
+      </div>
+      <div class="folder-bar">
+        <svg class="folder-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M3 7.5C3 6.12 4.12 5 5.5 5H9.2c.54 0 1.06.21 1.44.59l1.1 1.1c.38.38.9.59 1.44.59H18.5C19.88 7.28 21 8.4 21 9.78V17.5C21 18.88 19.88 20 18.5 20H5.5C4.12 20 3 18.88 3 17.5V7.5Z"
+                stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+        </svg>
+        <div class="folder-title">${obj.title}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* =========================
+   UI: ГЛАВНАЯ / ПАПКА
+========================= */
+function showHome(){
+  currentFolderKey = null;
+  currentList = [];
+  currentIndex = 0;
+
+  foldersDiv.style.display = "grid";
+  imagesDiv.style.display  = "none";
+  backBtn.style.display    = "none";
+  titleEl.innerText        = "Our works";
+  imagesDiv.innerHTML      = "";
+}
+
+function showFolderUI(key){
+  const f = folders[key];
+  if(!f) return;
+
+  currentFolderKey = key;
+  currentList = f.images.slice();
+
+  foldersDiv.style.display = "none";
+  imagesDiv.style.display  = "grid";
+  backBtn.style.display    = "inline-block";
+  titleEl.innerText        = f.title;
+
+  imagesDiv.innerHTML = "";
+  f.images.forEach((src, idx) => {
+    const d = document.createElement("div");
+    d.className = "img-tile";
+    d.innerHTML = `<img src="${src}" loading="lazy" alt="">`;
+    d.onclick = () => openLightboxByIndex(idx);
+    imagesDiv.appendChild(d);
+  });
+}
+
+/* =========================
+   НАВИГАЦИЯ ПО ПАПКАМ (hash)
+========================= */
+function openFolder(key){
+  location.hash = key; // Back/Forward браузера работает по папкам
+}
+
+function openFolderClick(card, key){
+  card.classList.add("is-opening");
+  setTimeout(() => {
+    openFolder(key);
+    card.classList.remove("is-opening");
+  }, 140);
+}
+
+function goBack(){
+  location.hash = "";
+}
+
+function handleRoute(){
+  const key = (location.hash || "").replace("#", "");
+  if (key && folders[key]) showFolderUI(key);
+  else showHome();
+}
+
+window.addEventListener("hashchange", handleRoute);
+
+/* =========================
+   LIGHTBOX + СЧЕТЧИК
+========================= */
+function updateLightboxUI(){
+  lbCounter.textContent = `${currentIndex + 1} / ${currentList.length}`;
+}
+
+function showLightboxImage(){
+  if (!currentList.length) return;
+  lightboxImg.src = currentList[currentIndex];
+  updateLightboxUI();
+}
+
+function openLightboxByIndex(idx){
+  if (!currentList.length) return;
+  currentIndex = idx;
+
+  showLightboxImage();
+  lightbox.classList.add("open");
+  document.body.classList.add("no-scroll");
+
+  // добавляем шаг в историю, чтобы Back сначала закрывал фото
+  if (!lightboxPushed) {
+    history.pushState({ lightbox: true }, "", location.href);
+    lightboxPushed = true;
+  }
+}
+
+function closeLightbox(fromPopstate = false){
+  lightbox.classList.remove("open");
+  lightboxImg.src = "";
+  document.body.classList.remove("no-scroll");
+
+  // если закрыли НЕ через Back (например X/клик по фону),
+  // откатываем добавленный шаг истории сами
+  if (!fromPopstate && lightboxPushed) {
+    lightboxPushed = false;
+    history.back();
+    return;
+  }
+
+  // если закрыли через Back — просто сбрасываем флаг
+  if (fromPopstate) {
+    lightboxPushed = false;
+  }
+}
+
+/* =========================
+   PREV / NEXT
+========================= */
+function nextPhoto(){
+  if (!currentList.length) return;
+  currentIndex = (currentIndex + 1) % currentList.length;
+  showLightboxImage();
+}
+
+function prevPhoto(){
+  if (!currentList.length) return;
+  currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+  showLightboxImage();
+}
+
+/* =========================
+   КНОПКИ КЛАВИАТУРЫ
+========================= */
+document.addEventListener("keydown", (e) => {
+  if (!lightbox.classList.contains("open")) return;
+
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowRight") nextPhoto();
+  if (e.key === "ArrowLeft") prevPhoto();
+});
+
+/* =========================
+   SWIPE НА ТЕЛЕФОНЕ
+========================= */
+let touchStartX = 0;
+let touchStartY = 0;
+
+lightboxImg.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  touchStartX = t.clientX;
+  touchStartY = t.clientY;
+}, { passive: true });
+
+lightboxImg.addEventListener("touchend", (e) => {
+  const t = e.changedTouches[0];
+  const dx = t.clientX - touchStartX;
+  const dy = t.clientY - touchStartY;
+
+  // если вертикальный жест сильнее — не считаем свайпом
+  if (Math.abs(dy) > Math.abs(dx)) return;
+
+  if (Math.abs(dx) < 40) return;
+
+  if (dx > 0) prevPhoto();
+  else nextPhoto();
+}, { passive: true });
+
+/* =========================
+   BACK В БРАУЗЕРЕ:
+   если открыт лайтбокс — Back закрывает ТОЛЬКО его
+========================= */
+window.addEventListener("popstate", () => {
+  if (lightbox.classList.contains("open")) {
+    closeLightbox(true);
+  }
+});
+
+/* =========================
+   INIT
+========================= */
+renderFolders();
+handleRoute();
+</script>
+
+</body>
+</html>
