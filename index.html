@@ -16,8 +16,8 @@
       --bg:#000;
       --text:#e9eef5;
       --muted:#8b95a7;
-      --muted2:#6e788a; /* general muted */
-      --hero-muted:#9CA3AF; /* requested hero grey */
+      --muted2:#6e788a;
+      --hero-muted:#9CA3AF;
       --border:rgba(255,255,255,.12);
       --border2:rgba(255,255,255,.08);
       --shadow: 0 20px 60px rgba(0,0,0,.55);
@@ -67,7 +67,7 @@
       inset: 0;
       z-index: -1;
       pointer-events:none;
-      opacity: .14; /* tweak if needed */
+      opacity: .14;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
       background-repeat: repeat;
       mix-blend-mode: overlay;
@@ -85,20 +85,17 @@
       margin-inline:auto;
     }
 
-    /* Thin divider line like Macroedges */
     .section-divider{
       height: 1px;
       width: 100%;
       background: rgba(255,255,255,.06);
     }
 
-    /* ===== BOXED NAVBAR (like Macroedges) ===== */
     .topbar{
       position: sticky;
       top: 0;
       z-index: 50;
 
-      /* IMPORTANT: prevents “blue block” behind the menu */
       background: #000;
       padding: 16px 0;
     }
@@ -109,7 +106,6 @@
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 14px;
 
-      /* slightly more opaque so glows don't tint the nav */
       background: rgba(0,0,0,.78);
       backdrop-filter: blur(10px);
       box-shadow: 0 18px 60px rgba(0,0,0,.55);
@@ -301,7 +297,6 @@
       border-radius: 0;
     }
 
-/* ===== HERO (full screen, black background) ===== */
 header.hero{
   position: relative;
   min-height: 100vh;
