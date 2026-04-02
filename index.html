@@ -2,412 +2,1596 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PERFECT SCHILDERS & DECORATIE</title>
+  <title>PERFECT SCHILDERS &amp; DECORATIE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/favicon.png">
 
-  <!-- Apple Fonts Substitute -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #000000;
-      --card-bg: #161617;
-      --text: #f5f5f7;
-      --muted: #86868b;
-      --accent: #0071e3;
-      --border: rgba(255, 255, 255, 0.1);
-      --glass: rgba(0, 0, 0, 0.7);
-      --radius: 22px;
+    :root{
+      --bg:#000;
+      --text:#e9eef5;
+      --muted:#8b95a7;
+      --muted2:#6e788a;
+      --hero-muted:#9CA3AF;
+      --border:rgba(255,255,255,.12);
+      --border2:rgba(255,255,255,.08);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+      --container: 1180px;
+      --white:#fff;
     }
 
-    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    
-    html { 
-      scroll-behavior: smooth; 
-      background: var(--bg);
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    html{
+      scroll-behavior: smooth;
+      scroll-padding-top: 110px;
     }
 
-    body {
-      margin: 0;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #000;
+      color:var(--text);
+      letter-spacing:.2px;
+      position: relative;
       overflow-x: hidden;
     }
 
-    /* NAV BAR */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--glass);
-      backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
+    /* ===== Global subtle blue glows (behind everything) ===== */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: -20%;
+      z-index: -2;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 520px at 18% 6%, rgba(65,130,255,.18), transparent 60%),
+        radial-gradient(760px 520px at 82% 22%, rgba(0,170,255,.12), transparent 62%),
+        radial-gradient(820px 620px at 62% 88%, rgba(70,120,255,.10), transparent 60%);
+      filter: blur(10px);
+      opacity: .75;
     }
 
-    .nav-container {
-      max-width: 1024px;
-      margin: 0 auto;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-    }
-
-    .brand {
-      font-weight: 600;
-      font-size: 17px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text);
-      font-size: 12px;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-    }
-
-    .nav-links a:hover { opacity: 1; }
-
-    .lang-switcher button {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 12px;
-      padding: 2px 8px;
-      cursor: pointer;
-      font-size: 10px;
-      margin-left: 5px;
-    }
-
-    .lang-switcher button.active {
-      color: var(--text);
-      border-color: var(--text);
-    }
-
-    /* HERO */
-    .hero {
-      padding: 100px 20px 60px;
-      text-align: center;
-      background: radial-gradient(circle at 50% -20%, #1d1d1f 0%, #000 80%);
-    }
-
-    .kicker {
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      letter-spacing: 0.5px;
-    }
-
-    .h1 {
-      font-size: clamp(40px, 8vw, 72px);
-      font-weight: 700;
-      line-height: 1.07;
-      letter-spacing: -0.02em;
-      margin: 0 0 20px;
-    }
-
-    .h1 span.dim { color: var(--muted); }
-
-    .hero-sub {
-      font-size: clamp(19px, 3vw, 24px);
-      color: var(--muted);
-      max-width: 700px;
-      margin: 0 auto 35px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      border-radius: 980px;
-      font-size: 17px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-
-    .btn:active { transform: scale(0.97); }
-
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-secondary { color: var(--accent); margin-left: 15px; }
-    .btn-secondary:after { content: " >"; }
-
-    /* GRID */
-    section { padding: 80px 20px; max-width: 1024px; margin: 0 auto; }
-
-    .h2 { font-size: 40px; font-weight: 600; margin-bottom: 40px; }
-
-    .folders-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .folder-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .folder-card:hover { transform: scale(1.01); }
-
-    .folder-thumb img {
-      width: 100%;
-      aspect-ratio: 16/10;
-      object-fit: cover;
-      display: block;
-    }
-
-    .folder-title {
-      padding: 25px;
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    /* IMAGES GRID (Inside category) */
-    .images-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .img-tile img {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
-
-    .img-tile img:hover { opacity: 0.8; }
-
-    /* FAQ */
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 25px 0;
-    }
-    .faq-item h4 { font-size: 19px; margin: 0 0 10px; font-weight: 600; }
-    .faq-item p { color: var(--muted); margin: 0; font-size: 17px; }
-
-    /* LIGHTBOX */
-    .lightbox {
+    /* ===== Grain / texture overlay ===== */
+    body::after{
+      content:"";
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.95);
+      z-index: -1;
+      pointer-events:none;
+      opacity: .14;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      mix-blend-mode: overlay;
+    }
+
+    body.no-scroll{
+      overflow:hidden;
+      touch-action:none;
+    }
+
+    /* When inside a folder: hide everything below Works */
+    body.in-gallery #belowWorks{ display:none; }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .container{
+      width: min(var(--container), calc(100% - 48px));
+      margin-inline:auto;
+    }
+
+    .section-divider{
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,.06);
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #000;
+      padding: 16px 0;
+    }
+
+    /* Desktop boxed nav */
+    .nav-box{
+      width: min(980px, calc(100% - 48px));
+      margin: 0 auto;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      overflow: hidden;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px 14px;
+      gap: 18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      min-width: 0;
+    }
+
+    /* Brand mark now uses favicon.png */
+    .brand-mark{
+      width:20px;height:20px;
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:6px;
+      background: url("/favicon.png") center/contain no-repeat;
+      flex:0 0 auto;
+      opacity:.95;
+    }
+
+    .brand-text{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 420px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      flex: 0 0 auto;
+    }
+    .nav-links a{ opacity:.85; }
+    .nav-links a:hover{ opacity:1; color:var(--text); }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex: 0 0 auto;
+    }
+
+    .lang{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      padding:6px;
+      background: rgba(0,0,0,.2);
+    }
+    .lang button{
+      border:0;
+      background:transparent;
+      color:var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      letter-spacing:1px;
+      cursor:pointer;
+      text-transform:uppercase;
+    }
+    .lang button.active{
+      color:var(--text);
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      background: rgba(0,0,0,.25);
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .btn:hover{ border-color: rgba(255,255,255,.28); }
+    .btn.primary{
+      background: var(--white);
+      color: #0a0b0c;
+      border-color: var(--white);
+      border-radius: 10px;
+      padding: 10px 16px;
+    }
+    .btn.primary:hover{ filter: brightness(.95); }
+
+    /* ===== Burger (mobile) ===== */
+    .burger{
+      display:none;
+      width:44px;
+      height:40px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      cursor:pointer;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .burger span{
+      position:absolute;
+      left:12px;
+      right:12px;
+      height:2px;
+      background: rgba(255,255,255,.85);
+      border-radius:2px;
+    }
+    .burger span:nth-child(1){ top:12px; }
+    .burger span:nth-child(2){ top:19px; opacity:.9; }
+    .burger span:nth-child(3){ top:26px; }
+
+    /* Mobile dropdown panel */
+    .mobile-menu{
+      display:none;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding:18px 14px 14px;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .mobile-menu.open{ display:block; }
+
+    .mobile-links{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      padding: 6px 2px 18px;
+    }
+    .mobile-links a{
+      color: rgba(233,238,245,.75);
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .mobile-links a:hover{ color: var(--text); }
+
+    .mobile-lang{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin: 10px 0 14px;
+    }
+    .mobile-lang button{
+      width:100%;
+      border-radius: 0;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(233,238,245,.65);
+      padding: 14px 10px;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-lang button.active{
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .mobile-cta{
+      width:100%;
+      justify-content:center;
+      border-radius: 0;
+    }
+
+    /* ===== HERO ===== */
+    header.hero{
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    header.hero::before{
+      content:"";
+      position:absolute;
+      inset:-25%;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(680px 520px at 22% 36%, rgba(65,130,255,.10), transparent 62%),
+        radial-gradient(820px 640px at 78% 52%, rgba(0,170,255,.08), transparent 60%);
+      filter: blur(12px);
+      opacity:.85;
+    }
+
+    .hero-content{
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 72px 0 56px;
+    }
+
+    .hero-left{
+      max-width: 920px;
+      margin-inline: auto;
+      text-align: center;
+      transform: translateY(-44px);
+    }
+
+    .hero-actions{
+      margin-top:22px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content: center;
+    }
+
+    .stats{
+      margin-top:28px;
+      display:flex;
+      gap:26px;
+      align-items:flex-end;
+      justify-content: center;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:11px;
+      flex-wrap:wrap;
+    }
+
+    .stat{
+      padding-right:22px;
+      border-right: 1px solid rgba(255,255,255,.10);
+      text-align: center;
+    }
+    .stat:last-child{ border-right: 0; }
+
+    .kicker{
+      color: var(--hero-muted);
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .h1{
+      font-size: clamp(40px, 6vw, 68px);
+      line-height:1.02;
+      margin:0;
+      letter-spacing:-1.2px;
+      text-transform:uppercase;
+    }
+
+    .h1 .dim{ color: var(--hero-muted); }
+
+    .sub{
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--hero-muted);
+      font-size:12px;
+      line-height:1.7;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .stat strong{
+      display:block;
+      color:var(--text);
+      font-size:24px;
+      letter-spacing:-.4px;
+      margin-bottom:6px;
+    }
+
+    /* ===== Sections ===== */
+    section{ padding:64px 0; }
+
+    .h2{
+      margin:0 0 12px;
+      font-size:42px;
+      line-height:1.08;
+      letter-spacing:-.8px;
+      text-transform:uppercase;
+    }
+    .lead{
+      margin:0 0 28px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:12px;
+      line-height:1.7;
+      max-width:860px;
+    }
+
+    /* ===== WORKS GRID (folders) ===== */
+    #folders.folders-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .folder-card{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,0));
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+
+      opacity:0;
+      animation:fadeUp .6s ease forwards;
+      animation-delay:calc(var(--i,0)*.08s);
+      transform: translateY(8px);
+
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      will-change: transform;
+    }
+
+    @keyframes fadeUp{ to{ opacity:1; transform: translateY(0); } }
+
+    @media (hover:hover) and (pointer:fine){
+      .folder-card:hover{
+        transform: translateY(-8px);
+        border-color: rgba(255,255,255,.18);
+        box-shadow: 0 22px 60px rgba(0,0,0,.6);
+      }
+    }
+
+    .folder-card:active,
+    .folder-card.is-opening{
+      transform: translateY(-3px);
+    }
+
+    .folder-thumb{
+      width:100%;
+      aspect-ratio:16/10;
+      background:#0b0b0b;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .folder-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.02);
+      filter:saturate(1.05) contrast(1.05);
+    }
+
+    .folder-thumb::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.18) 45%,transparent 60%);
+      transform:translateX(-60%) rotate(10deg);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .folder-card:hover .folder-thumb::after{
+      opacity:1;
+      animation:shine .9s ease forwards;
+    }
+
+    @keyframes shine{
+      from{transform:translateX(-60%) rotate(10deg);}
+      to{transform:translateX(60%) rotate(10deg);}
+    }
+
+    .folder-bar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:10px;
+      padding:14px 14px;
+      background: rgba(0,0,0,.35);
+      border-top:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(6px);
+      transition: background .25s ease, border-color .25s ease;
+    }
+
+    .folder-card:hover .folder-bar{
+      background: rgba(0,0,0,.45);
+      border-color: rgba(255,255,255,.14);
+    }
+
+    .folder-icon{
+      width:18px;
+      opacity:.92;
+      flex:0 0 auto;
+    }
+
+    .folder-title{
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-width: 0;
+    }
+
+    /* ===== IMAGES GRID ===== */
+    #images.images-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .img-tile{
+      border-radius: 16px;
+      overflow:hidden;
+      background:#0b0b0b;
+      border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+
+    .img-tile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .img-tile img{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:block;
+      filter:saturate(1.03) contrast(1.03);
+    }
+
+    /* Back button */
+    .center-actions{
+      text-align:center;
+      margin-top:26px;
+    }
+    #backBtn{
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition: .15s;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    #backBtn:hover{
+      background: rgba(255,255,255,.12);
+      transform: translateY(-1px);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-grid{
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .qa{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,0));
+      min-height: 140px;
+    }
+
+    .qa h4{
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .qa p{
+      margin: 0;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ===== Contacts ===== */
+    .contacts{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:10px;
+    }
+    .contacts a{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color: rgba(233,238,245,.78);
+      border:1px solid rgba(255,255,255,.12);
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.25);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:12px;
+      font-weight:800;
+      transition:.18s;
+    }
+    .contacts a:hover{
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+      transform: translateY(-1px);
+    }
+
+    /* ===== Reviews section ===== */
+    .rating-line{
+      margin: 0 0 18px;
+      color: rgba(233,238,245,.82);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:12px;
+    }
+    .rating-line strong{
+      color: var(--text);
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .tp-standalone{
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      padding: 16px 14px;
+      overflow: hidden;
+      max-width: 620px;
+    }
+
+    /* ===== Bottom mini footer bar ===== */
+    .mini-footer{
+      padding: 22px 0;
+      color: rgba(233,238,245,.55);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .mini-footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 2000;
-      backdrop-filter: blur(10px);
+      padding: 20px;
+      z-index: 9999;
     }
-    .lightbox.open { display: flex; }
-    .lightbox img { max-width: 90%; max-height: 80%; border-radius: 10px; }
-    
-    .lb-close { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; color: var(--muted); }
-    .lb-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; pointer-events: none; }
-    .lb-btn { pointer-events: auto; font-size: 40px; color: white; cursor: pointer; opacity: 0.5; }
-    .lb-btn:hover { opacity: 1; }
+    .lightbox.open{ display:flex; }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .folders-grid { grid-template-columns: 1fr; }
-      .images-grid { grid-template-columns: repeat(2, 1fr); }
-      .h1 { font-size: 42px; }
-      .h2 { font-size: 32px; }
+    .lightbox img{
+      max-width: 95vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      user-select:none;
+      -webkit-user-drag:none;
+      touch-action:pan-y;
+    }
+
+    .lb-btn{
+      position: fixed;
+      z-index: 10001;
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-size: 34px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-btn:hover{ background: rgba(255,255,255,.12); }
+
+    .lb-close{ top: 18px; left: 18px; font-size: 30px; }
+    .lb-prev{ left: 18px; }
+    .lb-next{ right: 18px; }
+    .lb-prev, .lb-next{
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 0.75;
+      padding-bottom: 4px;
+    }
+
+    .lb-counter{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 10001;
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.85);
+      font-size: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ===== Responsive ===== */
+    @media(max-width: 1060px){
+      .brand-text{ max-width: 260px; }
+    }
+
+    /* Mobile: full-width nav like Macroedges + 2 columns for folders/images + 2 columns for FAQ */
+    @media (max-width: 980px){
+      html{ scroll-padding-top: 78px; }
+
+      .topbar{ padding: 0; }
+      .nav-box{
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+        box-shadow: none;
+        background: rgba(0,0,0,.92);
+      }
+      .nav{ padding: 14px 16px; }
+
+      .nav-links{ display:none; }
+      .nav-right .lang{ display:none; }
+      .nav-right .btn.primary{ display:none; }
+      .burger{ display:inline-flex; align-items:center; justify-content:center; }
+
+      .brand-text{ max-width: 62vw; }
+
+      /* two columns on phone */
+      #folders.folders-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+      #images.images-grid{ grid-template-columns:repeat(2,1fr); gap:12px; }
+
+      /* FAQ two columns on phone */
+      .faq-grid{ grid-template-columns: 1fr 1fr; gap: 14px; }
+      .qa{ padding: 16px; min-height: 0; }
+      .h2{ font-size:36px; }
+
+      .hero-content{ padding: 60px 0 44px; }
+      .hero-left{ transform: translateY(-60px); max-width: 720px; }
+    }
+
+    @media(max-width: 560px){
+      .brand-text{ max-width: 58vw; }
+      .qa h4{ font-size: 12px; }
+      .qa p{ font-size: 11px; }
+    }
+
+    @media(max-width: 420px){
+      /* keep 2 columns even here (as you asked) */
+      #folders.folders-grid{ gap:12px; }
+      #images.images-grid{ gap:10px; }
+      .faq-grid{ gap:12px; }
+    }
+
+    @media(max-width: 980px){
+      .lb-btn{ width: 58px; height: 58px; border-radius: 16px; }
+      .lb-close{ top: 14px; left: 14px; }
+      .lb-prev{ left: 12px; }
+      .lb-next{ right: 12px; }
+      .lb-counter{ bottom: 16px; }
+
+      .mini-footer-inner{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
     }
   </style>
 
+  <!-- TrustBox script (Trustpilot) -->
   <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
 </head>
 
 <body>
 
-  <nav class="topbar">
-    <div class="nav-container">
-      <a href="#" class="brand">PERFECT SCHILDERS</a>
-      <div class="nav-links">
-        <a href="#works" data-i18n="nav_works">Works</a>
-        <a href="#faq" data-i18n="nav_faq">FAQ</a>
-        <a href="#contacts" data-i18n="nav_contact">Contact</a>
+  <!-- TOP NAV -->
+  <div class="topbar">
+    <div class="nav-box">
+      <div class="nav">
+        <a class="brand" href="#top" data-close>
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-text">PERFECT SCHILDERS &amp; DECORATIE</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#works" data-i18n="nav_works">WORKS</a>
+          <a href="#faq" data-i18n="nav_faq">FAQ</a>
+          <a href="#contacts" data-i18n="nav_contact">CONTACT</a>
+          <a href="#reviews" data-i18n="nav_reviews">REVIEWS</a>
+        </div>
+
+        <div class="nav-right">
+          <div class="lang" aria-label="Language">
+            <button class="active" type="button" data-lang-btn="en">EN</button>
+            <button type="button" data-lang-btn="nl">NL</button>
+          </div>
+
+          <a class="btn primary" href="#works" data-i18n="nav_gallery">GALLERY</a>
+
+          <!-- Mobile burger -->
+          <button class="burger" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
-      <div class="lang-switcher">
-        <button onclick="setLang('en')" data-lang-btn="en">EN</button>
-        <button onclick="setLang('nl')" data-lang-btn="nl">NL</button>
+
+      <!-- MOBILE DROPDOWN -->
+      <div class="mobile-menu" aria-hidden="true">
+        <div class="mobile-links">
+          <a href="#works" data-close data-i18n="nav_works">WORKS</a>
+          <a href="#faq" data-close data-i18n="nav_faq">FAQ</a>
+          <a href="#contacts" data-close data-i18n="nav_contact">CONTACT</a>
+          <a href="#reviews" data-close data-i18n="nav_reviews">REVIEWS</a>
+        </div>
+
+        <div class="mobile-lang">
+          <button class="active" type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="nl">NL</button>
+        </div>
+
+        <a class="btn primary mobile-cta" href="#works" data-close data-i18n="nav_gallery">GALLERY</a>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <header class="hero">
-    <div class="kicker" data-i18n="hero_kicker">Professional Decoration</div>
-    <h1 class="h1">
-      <span data-i18n="hero_h1_line1">Transform your home.</span><br>
-      <span class="dim" data-i18n="hero_h1_dim">Quality you can trust.</span>
-    </h1>
-    <p class="hero-sub" data-i18n="hero_sub">
-      Plaster, decorative finishes, wallpapers and laminate — clean work, attention to details.
-    </p>
-    <div class="hero-actions">
-      <a href="#works" class="btn btn-primary" data-i18n="hero_btn_works">Explore Works</a>
-      <a href="#contacts" class="btn btn-secondary" data-i18n="hero_btn_contact">Contact</a>
+  <!-- HERO -->
+  <header id="top" class="hero">
+    <div class="container hero-content">
+      <div class="hero-left">
+        <div class="kicker" data-i18n="hero_kicker">Professional renovation &amp; decoration</div>
+
+        <h1 class="h1">
+          <span data-i18n="hero_h1_line1">TRANSFORM&nbsp;YOUR</span><br />
+          <span data-i18n="hero_h1_line2">HOME TODAY.</span><br />
+          <span class="dim" data-i18n="hero_h1_dim">QUALITY YOU CAN TRUST.</span>
+        </h1>
+
+        <div class="sub" data-i18n="hero_sub">
+          PLASTER, DECORATIVE PLASTER, WALLPAPERS, LAMINATE — CLEAN WORK, <br>
+          MODERN STYLE, AND ATTENTION TO DETAILS.
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#works" data-i18n="hero_btn_works">EXPLORE WORKS <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#contacts" data-i18n="hero_btn_contact">CONTACT</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>20</strong><span data-i18n="stat_years">YEARS EXP.</span></div>
+          <div class="stat"><strong>400+</strong><span data-i18n="stat_projects">PROJECTS</span></div>
+          <div class="stat"><strong>NL</strong><span data-i18n="stat_area">SERVICE AREA</span></div>
+        </div>
+      </div>
     </div>
   </header>
 
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- WORKS -->
   <section id="works">
-    <h2 class="h2" id="gallery-title" data-i18n="works_title">Works</h2>
-    <div id="folders" class="folders-grid"></div>
-    <div id="images" class="images-grid" style="display:none;"></div>
-    
-    <div style="text-align:center; margin-top:40px;">
-      <button id="backBtn" class="btn btn-secondary" onclick="goBack()" style="display:none;" data-i18n="btn_back">← Back</button>
+    <div class="container">
+      <h2 class="h2" id="gallery-title" data-i18n="works_title">Our works</h2>
+      <p class="lead" data-i18n="works_lead">
+        SELECT A CATEGORY TO VIEW PROJECT PHOTOS. CLICK ANY PHOTO TO OPEN FULL SCREEN.
+      </p>
+
+      <div id="folders" class="folders-grid"></div>
+      <div id="images" class="images-grid" style="display:none;"></div>
+
+      <div class="center-actions">
+        <button id="backBtn" onclick="goBack()" style="display:none;" data-i18n="btn_back">← Back</button>
+      </div>
     </div>
   </section>
 
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- Everything below Works (hidden when inside folder) -->
   <div id="belowWorks">
+
+    <!-- FAQ -->
     <section id="faq">
-      <h2 class="h2" data-i18n="faq_title">FAQ</h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <h4 data-i18n="q1">What's included?</h4>
-          <p data-i18n="a1">Preparation, material advice, and clean finishing.</p>
-        </div>
-        <div class="faq-item">
-          <h4 data-i18n="q2">How fast can you start?</h4>
-          <p data-i18n="a2">Message us for the nearest available slot.</p>
+      <div class="container">
+        <div class="kicker" data-i18n="faq_kicker">FREQUENTLY ASKED QUESTIONS</div>
+        <h2 class="h2" data-i18n="faq_title">COMMON QUESTIONS</h2>
+        <p class="lead" data-i18n="faq_lead">EVERYTHING YOU NEED TO KNOW ABOUT OUR WORKS AND PROCESS</p>
+
+        <div class="faq-grid">
+          <div class="qa">
+            <h4 data-i18n="q1">WHAT'S INCLUDED IN A PROJECT?</h4>
+            <p data-i18n="a1">PREPARATION, MATERIALS RECOMMENDATIONS, CLEAN FINISHING, AND PHOTO RESULTS.</p>
+          </div>
+
+          <div class="qa">
+            <h4 data-i18n="q2">HOW FAST CAN YOU START?</h4>
+            <p data-i18n="a2">DEPENDS ON CURRENT SCHEDULE — MESSAGE US AND WE’LL CONFIRM THE NEAREST SLOT.</p>
+          </div>
+
+          <div class="qa">
+            <h4 data-i18n="q3">DO YOU WORK WITH MY MATERIALS?</h4>
+            <p data-i18n="a3">YES — OR WE CAN RECOMMEND AND PROVIDE A SHOPPING LIST BASED ON YOUR GOAL.</p>
+          </div>
+
+          <div class="qa">
+            <h4 data-i18n="q4">DO YOU DO SMALL JOBS?</h4>
+            <p data-i18n="a4">YES — FROM SINGLE WALLS TO FULL ROOMS AND COMPLEX DECORATIVE FINISHES.</p>
+          </div>
+
+          <div class="qa">
+            <h4 data-i18n="q5">HOW DO YOU CALCULATE PRICE?</h4>
+            <p data-i18n="a5">BY AREA, MATERIALS, COMPLEXITY, AND PREP WORK. SEND PHOTOS FOR A QUICK ESTIMATE.</p>
+          </div>
+
+          <div class="qa">
+            <h4 data-i18n="q6">WHERE DO YOU WORK?</h4>
+            <p data-i18n="a6">NETHERLANDS — CONTACT US WITH YOUR CITY AND WE’LL CONFIRM AVAILABILITY.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- CONTACTS -->
     <section id="contacts">
-      <h2 class="h2" data-i18n="contacts_title">Contacts</h2>
-      <p style="color: var(--muted); margin-bottom: 20px;" data-i18n="contacts_lead">Write to us for a quick estimate.</p>
-      <a href="mailto:perfectschildersdecoratie@gmail.com" class="btn btn-primary">Email</a>
-      <a href="https://wa.me/31619449568" class="btn btn-secondary">WhatsApp</a>
-    </section>
-  </div>
+      <div class="container">
+        <h2 class="h2" data-i18n="contacts_title">Contacts</h2>
+        <p class="lead" data-i18n="contacts_lead">WRITE TO US — WE REPLY FAST AND CAN ESTIMATE YOUR PROJECT.</p>
 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="lb-close">×</span>
-    <div class="lb-nav">
-      <div class="lb-btn" onclick="event.stopPropagation(); prevPhoto()">‹</div>
-      <div class="lb-btn" onclick="event.stopPropagation(); nextPhoto()">›</div>
-    </div>
-    <img id="lightboxImg" src="" onclick="event.stopPropagation()">
-  </div>
-
-  <script>
-    const I18N = {
-      en: {
-        nav_works: "Works", nav_faq: "FAQ", nav_contact: "Contact",
-        hero_kicker: "Professional Decoration",
-        hero_h1_line1: "Transform your home.", hero_h1_dim: "Quality you can trust.",
-        hero_sub: "Plaster, decorative finishes, wallpapers and laminate.",
-        hero_btn_works: "Explore Works", hero_btn_contact: "Contact",
-        works_title: "Works", btn_back: "Back",
-        faq_title: "FAQ", q1: "What's included?", a1: "Full prep and clean finish.",
-        q2: "Start date?", a2: "Contact us for the schedule.",
-        contacts_title: "Contacts", contacts_lead: "Write to us for a quick estimate.",
-        folders: { plaster: "Plaster", decorative_plaster: "Decorative", wallpapers: "Wallpapers", laminate: "Laminate" }
-      },
-      nl: {
-        nav_works: "Werken", nav_faq: "FAQ", nav_contact: "Contact",
-        hero_kicker: "Professionele Renovatie",
-        hero_h1_line1: "Verander je huis.", hero_h1_dim: "Kwaliteit waarop u kunt vertrouwen.",
-        hero_sub: "Stucwerk, decoratieve afwerkingen, behang en laminaat.",
-        hero_btn_works: "Bekijk Werken", hero_btn_contact: "Contact",
-        works_title: "Onze Werken", btn_back: "Terug",
-        faq_title: "Veelgestelde Vragen", q1: "Wat is inbegrepen?", a1: "Volledige voorbereiding en afwerking.",
-        q2: "Wanneer starten?", a2: "Neem contact op voor de planning.",
-        contacts_title: "Contact", contacts_lead: "Schrijf ons voor een prijsopgave.",
-        folders: { plaster: "Stucwerk", decorative_plaster: "Decoratief", wallpapers: "Behang", laminate: "Laminaat" }
-      }
-    };
-
-    const folders = {
-      plaster: { preview: "previews/plaster-preview.png", images: ["gallery/plaster/plaster (1).jpg", "gallery/plaster/plaster (2).jpg"] },
-      decorative_plaster: { preview: "previews/decorativeplaster-preview.png", images: ["gallery/decorative_plaster/decorative_plaster (1).jpg", "gallery/decorative_plaster/decorative_plaster (2).jpg"] },
-      wallpapers: { preview: "previews/wallpapers-preview.png", images: ["gallery/wallpapers/IMG_2780.jpeg", "gallery/wallpapers/IMG_2781.jpeg"] },
-      laminate: { preview: "previews/laminate-preview.png", images: ["gallery/laminate/laminate (1).jpg"] }
-    };
-
-    let currentLang = 'en';
-    let currentList = [];
-    let currentIndex = 0;
-
-    function setLang(lang) {
-      currentLang = lang;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (I18N[lang][key]) el.innerHTML = I18N[lang][key];
-      });
-      document.querySelectorAll('[data-lang-btn]').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
-      });
-      renderFolders();
-    }
-
-    function renderFolders() {
-      const grid = document.getElementById('folders');
-      grid.innerHTML = Object.entries(folders).map(([key, obj]) => `
-        <div class="folder-card" onclick="openFolder('${key}')">
-          <div class="folder-thumb"><img src="${obj.preview}"></div>
-          <div class="folder-title">${I18N[currentLang].folders[key]}</div>
+        <div class="contacts">
+          <a href="mailto:perfectschildersdecoratie@gmail.com" data-i18n="contact_email">Email</a>
+          <a href="https://wa.me/31619449568" target="_blank" rel="noopener">WhatsApp</a>
         </div>
-      `).join('');
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="container">
+        <h2 class="h2" data-i18n="reviews_title">Reviews</h2>
+        <p class="lead" data-i18n="reviews_lead">
+          HERE YOU CAN LEAVE US A REVIEW OR READ REVIEWS FROM OTHER CLIENTS.
+        </p>
+
+        <p class="rating-line">
+          <span data-i18n="reviews_rating_label">CURRENT RATING:</span> <strong id="ratingValue">5 ★</strong>
+        </p>
+
+        <div class="tp-standalone">
+          <div class="trustpilot-widget"
+               data-locale="en-US"
+               data-template-id="56278e9abfbbba0bdcd568bc"
+               data-businessunit-id="697df01d68c5676d5f361b80"
+               data-style-height="52px"
+               data-style-width="100%"
+               data-token="90767c34-31d3-4182-a88d-5d272f4ab9bf">
+            <a href="https://www.trustpilot.com/review/perfectschildersdecoratie.com" target="_blank" rel="noopener">Trustpilot</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- FOOTER -->
+    <footer class="mini-footer">
+      <div class="container mini-footer-inner">
+        <div>© <span id="year"></span> PERFECT SCHILDERS &amp; DECORATIE</div>
+        <div data-i18n="footer_rights">ALL RIGHTS RESERVED</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lb-btn lb-close" onclick="event.stopPropagation(); closeLightbox();" aria-label="Close">×</button>
+    <button class="lb-btn lb-prev" onclick="event.stopPropagation(); prevPhoto();" aria-label="Previous">‹</button>
+    <button class="lb-btn lb-next" onclick="event.stopPropagation(); nextPhoto();" aria-label="Next">›</button>
+
+    <div class="lb-counter" onclick="event.stopPropagation()">
+      <span id="lbCounter">1 / 1</span>
+    </div>
+
+    <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
+<script>
+/* =========================
+   YEAR
+========================= */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* =========================
+   i18n
+========================= */
+const I18N = {
+  en: {
+    nav_works: "WORKS",
+    nav_faq: "FAQ",
+    nav_contact: "CONTACT",
+    nav_reviews: "REVIEWS",
+    nav_gallery: "GALLERY",
+
+    hero_kicker: "Professional renovation & decoration",
+    hero_h1_line1: "TRANSFORM\u00A0YOUR",
+    hero_h1_line2: "HOME TODAY.",
+    hero_h1_dim: "QUALITY YOU CAN TRUST.",
+    hero_sub: "PLASTER, DECORATIVE PLASTER, WALLPAPERS, LAMINATE — CLEAN WORK,<br>MODERN STYLE, AND ATTENTION TO DETAILS.",
+    hero_btn_works: "EXPLORE WORKS <span aria-hidden='true'>→</span>",
+    hero_btn_contact: "CONTACT",
+
+    stat_years: "YEARS EXP.",
+    stat_projects: "PROJECTS",
+    stat_area: "SERVICE AREA",
+
+    works_title: "Our works",
+    works_lead: "SELECT A CATEGORY TO VIEW PROJECT PHOTOS. CLICK ANY PHOTO TO OPEN FULL SCREEN.",
+    btn_back: "← Back",
+
+    faq_kicker: "FREQUENTLY ASKED QUESTIONS",
+    faq_title: "COMMON QUESTIONS",
+    faq_lead: "EVERYTHING YOU NEED TO KNOW ABOUT OUR WORKS AND PROCESS",
+
+    q1: "WHAT'S INCLUDED IN A PROJECT?",
+    a1: "PREPARATION, MATERIALS RECOMMENDATIONS, CLEAN FINISHING, AND PHOTO RESULTS.",
+    q2: "HOW FAST CAN YOU START?",
+    a2: "DEPENDS ON CURRENT SCHEDULE — MESSAGE US AND WE’LL CONFIRM THE NEAREST SLOT.",
+    q3: "DO YOU WORK WITH MY MATERIALS?",
+    a3: "YES — OR WE CAN RECOMMEND AND PROVIDE A SHOPPING LIST BASED ON YOUR GOAL.",
+    q4: "DO YOU DO SMALL JOBS?",
+    a4: "YES — FROM SINGLE WALLS TO FULL ROOMS AND COMPLEX DECORATIVE FINISHES.",
+    q5: "HOW DO YOU CALCULATE PRICE?",
+    a5: "BY AREA, MATERIALS, COMPLEXITY, AND PREP WORK. SEND PHOTOS FOR A QUICK ESTIMATE.",
+    q6: "WHERE DO YOU WORK?",
+    a6: "NETHERLANDS — CONTACT US WITH YOUR CITY AND WE’LL CONFIRM AVAILABILITY.",
+
+    contacts_title: "Contacts",
+    contacts_lead: "WRITE TO US — WE REPLY FAST AND CAN ESTIMATE YOUR PROJECT.",
+    contact_email: "Email",
+
+    reviews_title: "Reviews",
+    reviews_lead: "HERE YOU CAN LEAVE US A REVIEW OR READ REVIEWS FROM OTHER CLIENTS.",
+    reviews_rating_label: "CURRENT RATING:",
+
+    footer_rights: "ALL RIGHTS RESERVED",
+
+    folders: {
+      plaster: "Plaster",
+      decorative_plaster: "Decorative plaster",
+      wallpapers: "Wallpapers",
+      laminate: "Laminate"
     }
+  },
 
-    function openFolder(key) {
-      currentList = folders[key].images;
-      document.getElementById('folders').style.display = 'none';
-      document.getElementById('belowWorks').style.display = 'none';
-      const imgGrid = document.getElementById('images');
-      imgGrid.style.display = 'grid';
-      imgGrid.innerHTML = currentList.map((src, idx) => `
-        <div class="img-tile"><img src="${src}" onclick="openLightbox(${idx})"></div>
-      `).join('');
-      document.getElementById('backBtn').style.display = 'inline-block';
-      document.getElementById('gallery-title').innerText = I18N[currentLang].folders[key];
+  nl: {
+    nav_works: "WERKEN",
+    nav_faq: "FAQ",
+    nav_contact: "CONTACT",
+    nav_reviews: "RECENSIES",
+    nav_gallery: "GALERIJ",
+
+    hero_kicker: "Professionele renovatie & decoratie",
+    hero_h1_line1: "VERANDER JE",
+    hero_h1_line2: "HUIS VANDAAG.",
+    hero_h1_dim: "KWALITEIT WAAR JE OP KUNT VERTROUWEN.",
+    hero_sub: "PLEISTERWERK, DECORATIEF STUCWERK, BEHANG, LAMINAAT — NET WERK,<br>MODERNE STIJL EN OOG VOOR DETAIL.",
+    hero_btn_works: "BEKIJK WERKEN <span aria-hidden='true'>→</span>",
+    hero_btn_contact: "CONTACT",
+
+    stat_years: "JAAR ERVARING",
+    stat_projects: "PROJECTEN",
+    stat_area: "REGIO",
+
+    works_title: "Onze werken",
+    works_lead: "SELECTEER EEN CATEGORIE OM PROJECTFOTO'S TE BEKIJKEN. KLIK OP EEN FOTO OM VOLLEDIG SCHERM TE OPENEN.",
+    btn_back: "← Terug",
+
+    faq_kicker: "VEELGESTELDE VRAGEN",
+    faq_title: "ALGEMENE VRAGEN",
+    faq_lead: "ALLES WAT JE MOET WETEN OVER ONS WERK EN PROCES",
+
+    q1: "WAT IS INBEGREPEN IN EEN PROJECT?",
+    a1: "VOORBEREIDING, MATERIAALADVIES, NETTE AFWERKING EN FOTORESULTATEN.",
+    q2: "HOE SNEL KUN JE STARTEN?",
+    a2: "AFHANKELIJK VAN DE PLANNING — BERICHT ONS EN WE BEVESTIGEN DE EERSTVOLGENDE MOGELIJKHEID.",
+    q3: "WERK JE MET MIJN MATERIALEN?",
+    a3: "JA — OF WE KUNNEN ADVISEREN EN EEN BOODSCHAPPENLIJST MAKEN OP BASIS VAN JE DOEL.",
+    q4: "DOE JE OOK KLEINE KLUSSEN?",
+    a4: "JA — VAN ÉÉN MUUR TOT VOLLEDIGE KAMERS EN COMPLEXE DECORATIEVE AFWERKING.",
+    q5: "HOE BEREKEN JE DE PRIJS?",
+    a5: "OP BASIS VAN OPPERVLAK, MATERIALEN, COMPLEXITEIT EN VOORBEREIDING. STUUR FOTO’S VOOR EEN SNELLE INSCHATTING.",
+    q6: "WAAR WERK JE?",
+    a6: "NEDERLAND — CONTACTEER ONS MET JE STAD EN WE BEVESTIGEN BESCHIKBAARHEID.",
+
+    contacts_title: "Contact",
+    contacts_lead: "SCHRIJF ONS — WE REAGEREN SNEL EN KUNNEN JE PROJECT INSCHATTEN.",
+    contact_email: "E-mail",
+
+    reviews_title: "Recensies",
+    reviews_lead: "HIER KUN JE EEN REVIEW ACHTERLATEN OF REVIEWS VAN ANDERE KLANTEN BEKIJKEN.",
+    reviews_rating_label: "HUIDIGE SCORE:",
+
+    footer_rights: "ALLE RECHTEN VOORBEHOUDEN",
+
+    folders: {
+      plaster: "Pleisterwerk",
+      decorative_plaster: "Decoratief stucwerk",
+      wallpapers: "Behang",
+      laminate: "Laminaat"
     }
+  }
+};
 
-    function goBack() {
-      document.getElementById('folders').style.display = 'grid';
-      document.getElementById('belowWorks').style.display = 'block';
-      document.getElementById('images').style.display = 'none';
-      document.getElementById('backBtn').style.display = 'none';
-      document.getElementById('gallery-title').innerText = I18N[currentLang].works_title;
-    }
+let currentLang = localStorage.getItem("lang") || "en";
 
-    function openLightbox(idx) {
-      currentIndex = idx;
-      document.getElementById('lightboxImg').src = currentList[currentIndex];
-      document.getElementById('lightbox').classList.add('open');
-    }
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem("lang", lang);
+  document.documentElement.lang = lang;
 
-    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
-    function nextPhoto() { currentIndex = (currentIndex + 1) % currentList.length; openLightbox(currentIndex); }
-    function prevPhoto() { currentIndex = (currentIndex - 1 + currentList.length) % currentList.length; openLightbox(currentIndex); }
+  // desktop pills
+  document.querySelectorAll("[data-lang-btn]").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang-btn") === lang);
+  });
+  // mobile pills
+  document.querySelectorAll(".mobile-lang [data-lang]").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
 
-    setLang('en');
-  </script>
+  // apply text
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const val = I18N[lang][key];
+    if (val != null) el.innerHTML = val;
+  });
+
+  // rerender folders and update titles in current route
+  renderFolders();
+  handleRoute(true);
+}
+
+/* =========================
+   FOLDERS DATA
+========================= */
+const folders = {
+  plaster: {
+    preview: "previews/plaster-preview.png",
+    images: [
+      "gallery/plaster/plaster (1).jpg",
+      "gallery/plaster/plaster (2).jpg"
+    ]
+  },
+  decorative_plaster: {
+    preview: "previews/decorativeplaster-preview.png",
+    images: [
+      "gallery/decorative_plaster/decorative_plaster (1).jpg",
+      "gallery/decorative_plaster/decorative_plaster (2).jpg",
+      "gallery/decorative_plaster/decorative_plaster (3).jpg",
+      "gallery/decorative_plaster/decorative_plaster (4).jpg",
+      "gallery/decorative_plaster/decorative_plaster (5).jpg",
+      "gallery/decorative_plaster/decorative_plaster (6).jpg",
+      "gallery/decorative_plaster/decorative_plaster (7).jpg",
+      "gallery/decorative_plaster/decorative_plaster (8).jpg",
+      "gallery/decorative_plaster/decorative_plaster (9).jpg",
+      "gallery/decorative_plaster/decorative_plaster (10).jpg",
+      "gallery/decorative_plaster/decorative_plaster (11).jpg",
+      "gallery/decorative_plaster/decorative_plaster (12).jpg",
+      "gallery/decorative_plaster/decorative_plaster (13).jpg",
+      "gallery/decorative_plaster/decorative_plaster (14).jpg",
+      "gallery/decorative_plaster/decorative_plaster (15).jpg",
+      "gallery/decorative_plaster/decorative_plaster (16).jpg",
+      "gallery/decorative_plaster/decorative_plaster (17).jpg",
+      "gallery/decorative_plaster/decorative_plaster (18).jpg",
+      "gallery/decorative_plaster/decorative_plaster (19).jpg",
+      "gallery/decorative_plaster/decorative_plaster (20).jpg",
+      "gallery/decorative_plaster/decorative_plaster (21).jpg",
+      "gallery/decorative_plaster/decorative_plaster (22).jpg",
+      "gallery/decorative_plaster/decorative_plaster (23).jpg",
+      "gallery/decorative_plaster/decorative_plaster (24).jpg",
+      "gallery/decorative_plaster/decorative_plaster (25).jpg",
+      "gallery/decorative_plaster/decorative_plaster (26).jpg",
+      "gallery/decorative_plaster/decorative_plaster (27).jpg",
+      "gallery/decorative_plaster/decorative_plaster (28).jpg",
+      "gallery/decorative_plaster/decorative_plaster (29).jpg",
+      "gallery/decorative_plaster/decorative_plaster (30).jpg",
+      "gallery/decorative_plaster/decorative_plaster (31).jpg",
+      "gallery/decorative_plaster/decorative_plaster (32).jpg",
+      "gallery/decorative_plaster/decorative_plaster (33).jpg",
+      "gallery/decorative_plaster/decorative_plaster (34).jpg",
+      "gallery/decorative_plaster/decorative_plaster (35).jpg",
+      "gallery/decorative_plaster/decorative_plaster (36).jpg",
+      "gallery/decorative_plaster/decorative_plaster (37).jpg",
+      "gallery/decorative_plaster/decorative_plaster (38).jpg",
+      "gallery/decorative_plaster/decorative_plaster (39).jpg",
+      "gallery/decorative_plaster/decorative_plaster (40).jpg",
+      "gallery/decorative_plaster/decorative_plaster (41).jpg",
+      "gallery/decorative_plaster/decorative_plaster (42).jpg",
+      "gallery/decorative_plaster/decorative_plaster (43).jpg",
+      "gallery/decorative_plaster/decorative_plaster (44).jpg",
+      "gallery/decorative_plaster/decorative_plaster (45).jpg",
+      "gallery/decorative_plaster/decorative_plaster (46).jpg",
+      "gallery/decorative_plaster/decorative_plaster (47).jpg",
+      "gallery/decorative_plaster/decorative_plaster (48).jpg",
+      "gallery/decorative_plaster/decorative_plaster (49).jpg",
+      "gallery/decorative_plaster/decorative_plaster (50).jpg",
+      "gallery/decorative_plaster/decorative_plaster (51).jpg",
+      "gallery/decorative_plaster/decorative_plaster (52).jpg",
+      "gallery/decorative_plaster/decorative_plaster (53).jpg",
+      "gallery/decorative_plaster/decorative_plaster (54).jpg",
+      "gallery/decorative_plaster/decorative_plaster (55).jpg",
+      "gallery/decorative_plaster/decorative_plaster (56).jpg",
+      "gallery/decorative_plaster/decorative_plaster (57).jpg",
+      "gallery/decorative_plaster/decorative_plaster (58).jpg",
+      "gallery/decorative_plaster/decorative_plaster (59).jpg",
+      "gallery/decorative_plaster/decorative_plaster (60).jpg",
+      "gallery/decorative_plaster/decorative_plaster (61).jpg",
+      "gallery/decorative_plaster/decorative_plaster (62).jpg",
+      "gallery/decorative_plaster/decorative_plaster (63).jpg",
+      "gallery/decorative_plaster/decorative_plaster (64).jpg",
+      "gallery/decorative_plaster/decorative_plaster (65).jpg",
+      "gallery/decorative_plaster/decorative_plaster (66).jpg",
+      "gallery/decorative_plaster/decorative_plaster (67).jpg",
+      "gallery/decorative_plaster/decorative_plaster (68).jpg",
+      "gallery/decorative_plaster/decorative_plaster (69).jpg",
+      "gallery/decorative_plaster/decorative_plaster (70).jpg",
+      "gallery/decorative_plaster/decorative_plaster (71).jpg",
+      "gallery/decorative_plaster/decorative_plaster (72).jpg",
+      "gallery/decorative_plaster/decorative_plaster (73).jpg",
+      "gallery/decorative_plaster/decorative_plaster (74).jpg",
+      "gallery/decorative_plaster/decorative_plaster (75).jpg"
+    ]
+  },
+  wallpapers: {
+    preview: "previews/wallpapers-preview.png",
+    images: [
+      "gallery/wallpapers/wallpapers (2).jpg",
+      "gallery/wallpapers/IMG_2780.jpeg",
+      "gallery/wallpapers/IMG_2781.jpeg",
+      "gallery/wallpapers/IMG_2782.jpeg",
+      "gallery/wallpapers/IMG_2783.jpeg",
+      "gallery/wallpapers/IMG_2784.jpeg"
+    ]
+  },
+  laminate: {
+    preview: "previews/laminate-preview.png",
+    images: [
+      "gallery/laminate/laminate (1).jpg"
+    ]
+  }
+};
+
+/* =========================
+   ELEMENTS
+========================= */
+const foldersDiv = document.getElementById("folders");
+const imagesDiv  = document.getElementById("images");
+const backBtn    = document.getElementById("backBtn");
+const titleEl    = document.getElementById("gallery-title");
+
+const lightbox    = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lbCounter   = document.getElementById("lbCounter");
+
+/* =========================
+   STATE
+========================= */
+let currentFolderKey = null;
+let currentList = [];
+let currentIndex = 0;
+let lightboxPushed = false;
+
+/* =========================
+   RENDER FOLDERS
+========================= */
+function renderFolders(){
+  const labels = I18N[currentLang].folders;
+  foldersDiv.innerHTML = Object.entries(folders).map(([key, obj], idx) => {
+    const title = labels[key] || key;
+    return `
+      <div class="folder-card" style="--i:${idx}" onclick="openFolderClick(this,'${key}')">
+        <div class="folder-thumb">
+          <img src="${obj.preview}" alt="${title} preview">
+        </div>
+        <div class="folder-bar">
+          <svg class="folder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 7.5C3 6.12 4.12 5 5.5 5H9.2c.54 0 1.06.21 1.44.59l1.1 1.1c.38.38.9.59 1.44.59H18.5C19.88 7.28 21 8.4 21 9.78V17.5C21 18.88 19.88 20 18.5 20H5.5C4.12 20 3 18.88 3 17.5V7.5Z"
+                  stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+          </svg>
+          <div class="folder-title">${title}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* =========================
+   UI: HOME / FOLDER
+========================= */
+function showHome(){
+  document.body.classList.remove("in-gallery");
+
+  currentFolderKey = null;
+  currentList = [];
+  currentIndex = 0;
+
+  foldersDiv.style.display = "grid";
+  imagesDiv.style.display  = "none";
+  backBtn.style.display    = "none";
+  titleEl.innerHTML        = I18N[currentLang].works_title;
+  imagesDiv.innerHTML      = "";
+}
+
+function showFolderUI(key){
+  const f = folders[key];
+  if(!f) return;
+
+  document.body.classList.add("in-gallery");
+
+  currentFolderKey = key;
+  currentList = f.images.slice();
+
+  foldersDiv.style.display = "none";
+  imagesDiv.style.display  = "grid";
+  backBtn.style.display    = "inline-block";
+
+  const folderTitle = (I18N[currentLang].folders[key] || key);
+  titleEl.textContent = folderTitle;
+
+  imagesDiv.innerHTML = "";
+  f.images.forEach((src, idx) => {
+    const d = document.createElement("div");
+    d.className = "img-tile";
+    d.innerHTML = `<img src="${src}" loading="lazy" alt="">`;
+    d.onclick = () => openLightboxByIndex(idx);
+    imagesDiv.appendChild(d);
+  });
+
+  // jump to works top so user doesn't see FAQ/Contacts etc.
+  document.getElementById("works").scrollIntoView({ behavior: "instant", block: "start" });
+}
+
+/* =========================
+   ROUTING (hash)
+   folder: #work-plaster
+========================= */
+function openFolder(key){
+  location.hash = "work-" + key;
+}
+
+function openFolderClick(card, key){
+  card.classList.add("is-opening");
+  setTimeout(() => {
+    openFolder(key);
+    card.classList.remove("is-opening");
+  }, 140);
+}
+
+function goBack(){
+  location.hash = "works";
+}
+
+function parseRoute(){
+  const raw = (location.hash || "").replace("#", "");
+  if (raw.startsWith("work-")) return { type:"folder", key: raw.replace("work-","") };
+  return { type:"anchor", key: raw };
+}
+
+function handleRoute(skipScroll){
+  const r = parseRoute();
+  if (r.type === "folder" && folders[r.key]){
+    showFolderUI(r.key);
+    return;
+  }
+  showHome();
+
+  // allow normal anchor scrolling for #faq/#contacts/#reviews/#works
+  if(!skipScroll && r.key){
+    const el = document.getElementById(r.key);
+    if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+}
+
+window.addEventListener("hashchange", () => handleRoute(false));
+
+/* =========================
+   LIGHTBOX + COUNTER
+========================= */
+function updateLightboxUI(){
+  lbCounter.textContent = `${currentIndex + 1} / ${currentList.length}`;
+}
+
+function showLightboxImage(){
+  if (!currentList.length) return;
+  lightboxImg.src = currentList[currentIndex];
+  updateLightboxUI();
+}
+
+function openLightboxByIndex(idx){
+  if (!currentList.length) return;
+  currentIndex = idx;
+
+  showLightboxImage();
+  lightbox.classList.add("open");
+  document.body.classList.add("no-scroll");
+
+  if (!lightboxPushed) {
+    history.pushState({ lightbox: true }, "", location.href);
+    lightboxPushed = true;
+  }
+}
+
+function closeLightbox(fromPopstate = false){
+  lightbox.classList.remove("open");
+  lightboxImg.src = "";
+  document.body.classList.remove("no-scroll");
+
+  if (!fromPopstate && lightboxPushed) {
+    lightboxPushed = false;
+    history.back();
+    return;
+  }
+
+  if (fromPopstate) {
+    lightboxPushed = false;
+  }
+}
+
+/* =========================
+   PREV / NEXT
+========================= */
+function nextPhoto(){
+  if (!currentList.length) return;
+  currentIndex = (currentIndex + 1) % currentList.length;
+  showLightboxImage();
+}
+
+function prevPhoto(){
+  if (!currentList.length) return;
+  currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+  showLightboxImage();
+}
+
+/* =========================
+   KEYBOARD
+========================= */
+document.addEventListener("keydown", (e) => {
+  if (!lightbox.classList.contains("open")) return;
+
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowRight") nextPhoto();
+  if (e.key === "ArrowLeft") prevPhoto();
+});
+
+/* =========================
+   SWIPE (mobile)
+========================= */
+let touchStartX = 0;
+let touchStartY = 0;
+
+lightboxImg.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  touchStartX = t.clientX;
+  touchStartY = t.clientY;
+}, { passive: true });
+
+lightboxImg.addEventListener("touchend", (e) => {
+  const t = e.changedTouches[0];
+  const dx = t.clientX - touchStartX;
+  const dy = t.clientY - touchStartY;
+
+  if (Math.abs(dy) > Math.abs(dx)) return;
+  if (Math.abs(dx) < 40) return;
+
+  if (dx > 0) prevPhoto();
+  else nextPhoto();
+}, { passive: true });
+
+/* Back button closes lightbox only */
+window.addEventListener("popstate", () => {
+  if (lightbox.classList.contains("open")) closeLightbox(true);
+});
+
+/* =========================
+   Mobile menu toggle
+========================= */
+const burger = document.querySelector(".burger");
+const mobileMenu = document.querySelector(".mobile-menu");
+
+function setMenu(open){
+  if(!burger || !mobileMenu) return;
+  mobileMenu.classList.toggle("open", open);
+  burger.setAttribute("aria-expanded", open ? "true" : "false");
+  mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
+}
+
+if (burger && mobileMenu){
+  burger.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.contains("open");
+    setMenu(!isOpen);
+  });
+
+  mobileMenu.querySelectorAll("[data-close]").forEach(el => {
+    el.addEventListener("click", () => setMenu(false));
+  });
+
+  document.addEventListener("click", (e) => {
+    const inside = mobileMenu.contains(e.target) || burger.contains(e.target);
+    if (!inside) setMenu(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+}
+
+/* =========================
+   Language buttons
+========================= */
+document.querySelectorAll("[data-lang-btn]").forEach(btn => {
+  btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang-btn")));
+});
+
+document.querySelectorAll(".mobile-lang [data-lang]").forEach(btn => {
+  btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang")));
+});
+
+/* =========================
+   INIT
+========================= */
+renderFolders();
+setLang(currentLang);
+handleRoute(true);
+</script>
+
 </body>
 </html>
